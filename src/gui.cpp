@@ -350,13 +350,13 @@ namespace Gui {
         ImGui::Begin(title.c_str(), nullptr, flags_tree);
         if (ImGui::TreeNode("Nodo Principale")) {
             ImGui::Text("Contenuto del nodo");
-            if (ImGui::TreeNode("Progetti Futuri")) {
+            if (ImGui::TreeNode("Elenco Progetti")) {
+                ImGui::Text("[Cariddi #1] Alberus");
                 ImGui::Text("[Cariddi #2] Valkyrie");
+                ImGui::Text("[Cariddi #3] Remini");
+
                 ImGui::TreePop();
             }
-            if (ImGui::TreeNode("Progetti Futuri")) {
-                ImGui::Text("[Cariddi #2] Valkyrie");
-                ImGui::TreePop();
             }
             if (ImGui::TreeNode("Sotto-nodo 2")) {
                 ImGui::Text("Contenuto del sotto-nodo 2");
