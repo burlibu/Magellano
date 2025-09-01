@@ -354,9 +354,7 @@ namespace Gui {
                 ImGui::Text("[Cariddi #1] Alberus");
                 ImGui::Text("[Cariddi #2] Valkyrie");
                 ImGui::Text("[Cariddi #3] Remini");
-
                 ImGui::TreePop();
-            }
             }
             if (ImGui::TreeNode("Sotto-nodo 2")) {
                 ImGui::Text("Contenuto del sotto-nodo 2");
