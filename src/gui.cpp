@@ -350,8 +350,12 @@ namespace Gui {
         ImGui::Begin(title.c_str(), nullptr, flags_tree);
         if (ImGui::TreeNode("Nodo Principale")) {
             ImGui::Text("Contenuto del nodo");
-            if (ImGui::TreeNode("Sotto-nodo 1")) {
-                ImGui::Text("Contenuto del sotto-nodo 1");
+            if (ImGui::TreeNode("Progetti Futuri")) {
+                ImGui::Text("[Cariddi #2] Valkyrie");
+                ImGui::TreePop();
+            }
+            if (ImGui::TreeNode("Progetti Futuri")) {
+                ImGui::Text("[Cariddi #2] Valkyrie");
                 ImGui::TreePop();
             }
             if (ImGui::TreeNode("Sotto-nodo 2")) {
