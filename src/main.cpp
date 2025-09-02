@@ -12,7 +12,7 @@
 #include "settings.h"
 #include "functions.h"
 #include "custom_colors.h"
-#include "gui.h"
+#include "gui/gui.h"
 
 
 int main() {
