@@ -5,6 +5,8 @@
 #include <future>
 #include <chrono>
 #include <vector>
+#include <random>
+#include <regex>
 // imgui
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
@@ -15,6 +17,10 @@
 #include "settings.h"
 
 #include "custom_colors.h"
+//json
+#include <fstream>
+#include "json.hpp"
+using json = nlohmann::json;
 
 enum class Error {
     OK,
@@ -239,6 +245,30 @@ ImVec2 CenterPosWindow(ImVec2 imvec2, GLFWwindow* window_ptr);
  * @return Error
  */
 Error Rectangle(const ImVec2& pos, const ImVec2& size, color col);
+
 /**
- * 
+ * Esegue un attacco simulato verso un target.
+ * @param target_ip IP del bersaglio
+ * @param port Porta di destinazione
+ * @param attack_type Tipo di attacco (es: "DoS", "BruteForce", ecc.)
+ * @param claymore Abilitazione del metodo Claymore
+ * @param spread Abilitazione del metodo Spread
+ * @param network_spread Abilitazione del metodo Network Spread
+ * @param err Array con size = 8 di codici da utilizzare per gli errori
+ * @param [0] Errore IP
+ * @param [1] Errore Port
+ * @param [2] not set
+ * @return true se l'attacco è stato eseguito, false altrimenti
  */
+void attack(const std::string& target_ip, const int& port, const std::string& attack_type,
+            bool claymore, bool spread, bool network_spread, int err[]);
+
+void save_attack_json(const std::string& ip, const int& port, const std::string& attack_type, bool claymore, bool spread, bool network_spread, bool success);
+
+/**
+ * @brief Controlla se un indirizzo IP è valido.
+ *
+ * @param ip L'indirizzo IP da controllare.
+ * @return Error::OK se l'IP è valido, Error::FAIL altrimenti.
+ */
+Error checkIp(const std::string& ip);

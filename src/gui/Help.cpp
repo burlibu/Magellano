@@ -40,39 +40,27 @@ namespace Gui {
             // Create tabs for different setting categories
             if (ImGui::BeginTabBar("SettingsTabs", ImGuiTabBarFlags_None)) {
                 // General Tab
-                if (ImGui::BeginTabItem("General")) {
+                if (ImGui::BeginTabItem("Tutorial")) {
                     
                     
                     ImGui::EndTabItem();
                 }
                 
                 // Display Tab
-                if (ImGui::BeginTabItem("Display")) {
+                if (ImGui::BeginTabItem("Fix Bugs")) {
                     
                     
                     ImGui::EndTabItem();
                 }
                 
                 // Audio Tab
-                if (ImGui::BeginTabItem("Audio")) {
+                if (ImGui::BeginTabItem("Contact")) {
                     
                     
                     ImGui::EndTabItem();
                 }
                 
                 // Advanced Tab
-                if (ImGui::BeginTabItem("Advanced")) {
-                    
-                    
-                    ImGui::EndTabItem();
-                }
-                
-                // Notifications Tab
-                if (ImGui::BeginTabItem("Notifications")) {
-                    
-                    
-                    ImGui::EndTabItem();
-                }
                 
                 ImGui::EndTabBar();
             }

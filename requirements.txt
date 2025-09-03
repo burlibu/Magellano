@@ -1,0 +1,2 @@
+# Librerie richieste per il progetto
+nlohmann_json

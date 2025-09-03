@@ -5,6 +5,8 @@
 #include <future>
 #include <chrono>
 #include <vector>
+#include <random>
+#include <regex>
 //imgui
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
@@ -15,7 +17,10 @@
 #include "settings.h"
 #include "functions.h"
 #include "custom_colors.h"
-
+//json
+#include <fstream>
+#include "json.hpp"
+using json = nlohmann::json;
 
 
 struct Notification {
@@ -206,3 +211,76 @@ Error Rectangle(const ImVec2& pos, const ImVec2& size, color col) {
 }
 
 
+
+void attack(const std::string& target_ip, const int& port, const std::string& attack_type, bool claymore, bool spread, bool network_spread, int err[]) {
+    // Inizializza tutte le celle del bitvector a zero
+    for (int i = 0; i < 8; ++i) err[i] = 0;
+    if (checkIp(target_ip) == Error::FAIL) {
+        err[0] = 1; // Errore IP
+        throw std::string("Invalid IP address format");
+    }
+
+    // Esempio: errore porta
+    if (port < 1 || port > 65535) {
+        err[1] = 1; // Errore porta
+        throw std::string("Invalid port number");
+    }
+
+    // Simula successo/fallimento
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_int_distribution<int> dist(0, 1);
+    bool success = dist(gen);
+
+    save_attack_json(target_ip, port, attack_type, claymore, spread, network_spread, success);
+}
+
+void save_attack_json(const std::string& ip, const int& port, const std::string& attack_type, bool claymore, bool spread, bool network_spread, bool success) {
+    // Crea un oggetto JSON con i dati dell'attacco
+    json attack = {
+        {"ip", ip},           // IP bersaglio
+        {"port", port},       // Porta bersaglio
+        {"type", attack_type},// Tipo di attacco
+        {"claymore", claymore}, // Se è previsto malware
+        {"spread", spread},
+        {"network_spread", network_spread}, // Se si vuole diffondere l'attacco
+        {"success", success} // Se l'attacco ha avuto successo
+    };
+
+    // Prova ad aprire il file attacks.json per leggere eventuali attacchi già salvati
+    std::ifstream infile("attacks.json");
+    json attacks;
+    if (infile.is_open()) {
+        infile >> attacks;      // Carica il contenuto del file nel json attacks
+        infile.close();         // Chiudi il file
+    }
+    // Se il file non contiene un array, inizializza un array vuoto
+    if (!attacks.is_array()) attacks = json::array();
+
+    // Aggiungi il nuovo attacco all'array
+    attacks.push_back(attack);
+
+    // Scrivi l'array aggiornato nel file attacks.json, con indentazione 4 spazi
+    std::ofstream outfile("attacks.json");
+    outfile << attacks.dump(4);
+    outfile.close();            // Chiudi il file
+}
+
+Error checkIp(const std::string& ip) {
+  std::regex ip_regex(R"((\d{1,3}\.){3}\d{1,3})");
+  if (!std::regex_match(ip, ip_regex)) {
+      return Error::FAIL;
+  }
+
+  // Controlla se l'IP è nella gamma valida
+  std::istringstream iss(ip);
+  std::string token;
+  while (std::getline(iss, token, '.')) {
+      int octet = std::stoi(token);
+      if (octet < 0 || octet > 255) {
+          return Error::FAIL;
+      }
+  }
+
+  return Error::OK;
+}

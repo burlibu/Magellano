@@ -11,6 +11,6 @@
 
 
 
-#define APP_VERSION "0.0.3"
+#define APP_VERSION "0.0.5"
 extern const std::string version;
 extern const bool DEBUG; 

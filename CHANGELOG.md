@@ -35,3 +35,14 @@
 ## 5/8/2025
 
 - Sistemato l' intero schermo coprendolo con delle finestre
+
+## Version 0.0.5
+
+## 3/9/2025
+
+- Definito lo scope dell' applicazione: hacking and cybersecurity
+- Aggiunta la gestione degli attacchi nel GUI
+- Aggiunta la visualizzazione della cronologia degli attacchi tramite un sistema di scrittura e lettura di un file json
+- Aggiunta dipendenza nlohmann/json per la gestione dei file json
+- Aggiunti errori per ip e port
+- Fixed Help tab
