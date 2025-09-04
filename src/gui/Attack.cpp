@@ -64,7 +64,7 @@ namespace Gui {
         // // Color picker
         // static float color[4] = {1.0f, 0.0f, 0.0f, 1.0f};
         // ImGui::ColorEdit4("Colore", color);
-        ImGui::SetNextItemWidth(150); // Imposta la larghezza desiderata in pixel
+        ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(20, 20));
         if (ImGui::Button("Attack")) {
             int err[8] = {0}; // Inizializza il vettore degli errori con tutti zeri
             try
@@ -76,6 +76,7 @@ namespace Gui {
               errors.push_back(e);
             }
         }
+        ImGui::PopStyleVar();
         if (errors.size() > 0) {
             ImGui::Text("Error: %s", errors.back().c_str());
         } 

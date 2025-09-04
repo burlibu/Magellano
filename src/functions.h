@@ -7,6 +7,7 @@
 #include <vector>
 #include <random>
 #include <regex>
+#include <ctime>
 // imgui
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
@@ -263,7 +264,7 @@ Error Rectangle(const ImVec2& pos, const ImVec2& size, color col);
 void attack(const std::string& target_ip, const int& port, const std::string& attack_type,
             bool claymore, bool spread, bool network_spread, int err[]);
 
-void save_attack_json(const std::string& ip, const int& port, const std::string& attack_type, bool claymore, bool spread, bool network_spread, bool success);
+void save_attack_json(const std::string& ip, const int& port, const std::string& attack_type, bool claymore, bool spread, bool network_spread, bool success, std::string timestamp);
 
 /**
  * @brief Controlla se un indirizzo IP è valido.
@@ -272,3 +273,9 @@ void save_attack_json(const std::string& ip, const int& port, const std::string&
  * @return Error::OK se l'IP è valido, Error::FAIL altrimenti.
  */
 Error checkIp(const std::string& ip);
+
+/**
+ * @brief Transforma un time_t in una stringa leggibile (formato: YYYY-MM-DD HH:MM:SS)
+ * 
+ */
+std::string time_t_to_string(time_t t);

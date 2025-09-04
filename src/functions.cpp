@@ -1,3 +1,5 @@
+// Converte un time_t in una stringa leggibile (formato: YYYY-MM-DD HH:MM:SS)
+
 //standard
 #include <iostream>
 #include <sstream>
@@ -7,6 +9,7 @@
 #include <vector>
 #include <random>
 #include <regex>
+#include <ctime>
 //imgui
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
@@ -231,11 +234,13 @@ void attack(const std::string& target_ip, const int& port, const std::string& at
     std::mt19937 gen(rd());
     std::uniform_int_distribution<int> dist(0, 1);
     bool success = dist(gen);
+    time_t timestamp = time(0);
+    std::string timestamp_str = time_t_to_string(timestamp);
 
-    save_attack_json(target_ip, port, attack_type, claymore, spread, network_spread, success);
+    save_attack_json(target_ip, port, attack_type, claymore, spread, network_spread, success, timestamp_str);
 }
 
-void save_attack_json(const std::string& ip, const int& port, const std::string& attack_type, bool claymore, bool spread, bool network_spread, bool success) {
+void save_attack_json(const std::string& ip, const int& port, const std::string& attack_type, bool claymore, bool spread, bool network_spread, bool success, std::string timestamp) {
     // Crea un oggetto JSON con i dati dell'attacco
     json attack = {
         {"ip", ip},           // IP bersaglio
@@ -244,7 +249,8 @@ void save_attack_json(const std::string& ip, const int& port, const std::string&
         {"claymore", claymore}, // Se è previsto malware
         {"spread", spread},
         {"network_spread", network_spread}, // Se si vuole diffondere l'attacco
-        {"success", success} // Se l'attacco ha avuto successo
+        {"success", success}, // Se l'attacco ha avuto successo
+        {"timestamp", timestamp}    // Timestamp dell'attacco
     };
 
     // Prova ad aprire il file attacks.json per leggere eventuali attacchi già salvati
@@ -283,4 +289,11 @@ Error checkIp(const std::string& ip) {
   }
 
   return Error::OK;
+}
+
+std::string time_t_to_string(time_t t) {
+    char buffer[32];
+    struct tm* timeinfo = localtime(&t);
+    strftime(buffer, sizeof(buffer), "%Y-%m-%d %H:%M:%S", timeinfo);
+    return std::string(buffer);
 }

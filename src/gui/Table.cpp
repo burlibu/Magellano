@@ -41,7 +41,7 @@ namespace Gui {
             }
         }
 
-        if (ImGui::BeginTable("Attacks history", 8, flags_table)) {
+        if (ImGui::BeginTable("Attacks history", 9, flags_table)) {
             ImGui::TableSetupColumn("ID", ImGuiTableColumnFlags_DefaultSort);
             ImGui::TableSetupColumn("IP");
             ImGui::TableSetupColumn("Port");
@@ -49,6 +49,7 @@ namespace Gui {
             ImGui::TableSetupColumn("Claymore");
             ImGui::TableSetupColumn("Spread");
             ImGui::TableSetupColumn("Network Spread");
+            ImGui::TableSetupColumn("Timestamp");
             ImGui::TableSetupColumn("Result");
             ImGui::TableHeadersRow();
 
@@ -64,11 +65,12 @@ namespace Gui {
                         bool spread = attacks[row].contains("spread") && !attacks[row]["spread"].is_null() ? attacks[row]["spread"].get<bool>() : false;
                         bool network_spread = attacks[row].contains("network_spread") && !attacks[row]["network_spread"].is_null() ? attacks[row]["network_spread"].get<bool>() : false;
                         bool success = attacks[row].contains("success") && !attacks[row]["success"].is_null() ? attacks[row]["success"].get<bool>() : false;
-
+                        std::string timestamp = attacks[row].contains("timestamp") && !attacks[row]["timestamp"].is_null() ? attacks[row]["timestamp"].get<std::string>() : "0";
                         ImGui::TableSetColumnIndex(4); ImGui::Text("%s", claymore ? "True" : "False");
                         ImGui::TableSetColumnIndex(5); ImGui::Text("%s", spread ? "True" : "False");
                         ImGui::TableSetColumnIndex(6); ImGui::Text("%s", network_spread ? "True" : "False");
-                        ImGui::TableSetColumnIndex(7);
+                        ImGui::TableSetColumnIndex(7); ImGui::Text("%s", timestamp.c_str());
+                        ImGui::TableSetColumnIndex(8);
                         if (success) {
                             ImGui::PushStyleColor(ImGuiCol_Text, verde); // verde
                             ImGui::Text("Success");
