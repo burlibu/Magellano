@@ -29,7 +29,7 @@ namespace Gui {
 
         // Lettura degli attacchi dal file attacks.json
         std::vector<json> attacks;
-        std::ifstream infile("attacks.json");
+        std::ifstream infile(attacks_file_path);
         if (infile.is_open()) {
             json attacks_json;
             infile >> attacks_json;
@@ -72,11 +72,11 @@ namespace Gui {
                         ImGui::TableSetColumnIndex(7); ImGui::Text("%s", timestamp.c_str());
                         ImGui::TableSetColumnIndex(8);
                         if (success) {
-                            ImGui::PushStyleColor(ImGuiCol_Text, verde); // verde
+                            ImGui::PushStyleColor(ImGuiCol_Text, verde); //+ verde
                             ImGui::Text("Success");
                             ImGui::PopStyleColor();
                         } else {
-                            ImGui::PushStyleColor(ImGuiCol_Text, rosso); // rosso
+                            ImGui::PushStyleColor(ImGuiCol_Text, rosso); //! rosso
                             ImGui::Text("Fail");
                             ImGui::PopStyleColor();
                         }

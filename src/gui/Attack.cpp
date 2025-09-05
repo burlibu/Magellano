@@ -22,7 +22,7 @@ namespace Gui {
     void AttackWindow::Render() {
         ImGui::SetNextWindowPos(pos, ImGuiCond_FirstUseEver);
         ImGui::SetNextWindowSize(size, ImGuiCond_FirstUseEver);
-        ImGui::Begin("Attack", &bool_esperimenti_window, flags_esperimenti_window);
+        ImGui::Begin("Attack", &bool_attack_window, flags_attack_window);
 
         static std::vector<std::string> errors;
 

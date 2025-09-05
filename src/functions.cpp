@@ -1,5 +1,3 @@
-// Converte un time_t in una stringa leggibile (formato: YYYY-MM-DD HH:MM:SS)
-
 //standard
 #include <iostream>
 #include <sstream>
@@ -254,7 +252,7 @@ void save_attack_json(const std::string& ip, const int& port, const std::string&
     };
 
     // Prova ad aprire il file attacks.json per leggere eventuali attacchi già salvati
-    std::ifstream infile("attacks.json");
+    std::ifstream infile(attacks_file_path);
     json attacks;
     if (infile.is_open()) {
         infile >> attacks;      // Carica il contenuto del file nel json attacks
@@ -267,7 +265,7 @@ void save_attack_json(const std::string& ip, const int& port, const std::string&
     attacks.push_back(attack);
 
     // Scrivi l'array aggiornato nel file attacks.json, con indentazione 4 spazi
-    std::ofstream outfile("attacks.json");
+    std::ofstream outfile(attacks_file_path);
     outfile << attacks.dump(4);
     outfile.close();            // Chiudi il file
 }

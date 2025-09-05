@@ -23,7 +23,7 @@ bool bool_demo_window                   = false;
 bool bool_my_window                     = false;
 bool bool_window1                       = false;
 bool bool_login_window                  = false;
-bool bool_esperimenti_window            = true;
+bool bool_attack_window            = true;
 bool bool_menu_bar                      = true;
 bool bool_tab_window                    = true;
 bool bool_Tree                          = true;
@@ -49,7 +49,7 @@ ImGuiWindowFlags flags_my_window = 0;
 
 ImGuiWindowFlags flags_demo_window = 0;
 
-ImGuiWindowFlags flags_esperimenti_window = 
+ImGuiWindowFlags flags_attack_window = 
     ImGuiWindowFlags_NoSavedSettings
     | ImGuiWindowFlags_NoCollapse
     | ImGuiWindowFlags_NoResize 

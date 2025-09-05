@@ -63,8 +63,8 @@ Gui::MenuBar menubar(ImVec2(0,0), ImVec2(0,0), frame_p, flags_menu_bar);
 
 Gui::TabWindow tabWindow("TabWindow", ImVec2(0,18), ImVec2(frame_width/6,frame_window_manager.frame_window_heigth - bottombar_height - menubar_height), frame_p, flags_tab_window);
 Gui::Tree tree("Tree", ImVec2(frame_width/6,menubar_height), ImVec2(2*frame_width/6,400), frame_p, flags_tree);
-Gui::Table table("Table", ImVec2(3*frame_width/6,menubar_height), ImVec2(3*frame_width/6,400), frame_p, flags_table);
-Gui::AttackWindow attack_window(ImVec2(frame_width/6,400+18), ImVec2((5*frame_width/6),(frame_window_manager.frame_window_heigth -400 - menubar_height - bottombar_height)), frame_p,flags_esperimenti_window);
+Gui::Table table("Attack Log", ImVec2(3*frame_width/6,menubar_height), ImVec2(3*frame_width/6,400), frame_p, flags_table);
+Gui::AttackWindow attack_window(ImVec2(frame_width/6,400+18), ImVec2((5*frame_width/6),(frame_window_manager.frame_window_heigth -400 - menubar_height - bottombar_height)), frame_p,flags_attack_window);
 
 
 Gui::BottomBar bottomBar("BottomBar", ImVec2(500,500), ImVec2(frame_width, 35.0f), frame_p, flags_BottomBar);
@@ -96,12 +96,12 @@ if (bool_login_window) {
         bool_my_window = false;
         bool_window1 = false;
         bool_demo_window = false;
-        bool_esperimenti_window = false;
+        bool_attack_window = false;
     } else {
         bool_my_window = true;
         bool_window1 = true;
         bool_demo_window = true;
-        bool_esperimenti_window = true;
+        bool_attack_window = true;
     }
 }
 
@@ -128,8 +128,8 @@ if (bool_demo_window) {
     demoWindow.Render();
 }
 
-//? ///////////////////////////////////////////////////////// Esperimenti window //////////////////////////////////////////////////////
-if (bool_esperimenti_window) {
+//! ///////////////////////////////////////////////////////// Attack window //////////////////////////////////////////////////////
+if (bool_attack_window) {
     attack_window.Render();
 }
 
