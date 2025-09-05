@@ -68,7 +68,7 @@ namespace Gui {
                         std::string timestamp = attacks[row].contains("timestamp") && !attacks[row]["timestamp"].is_null() ? attacks[row]["timestamp"].get<std::string>() : "0";
                         ImGui::TableSetColumnIndex(4); ImGui::Text("%s", claymore ? "True" : "False");
                         ImGui::TableSetColumnIndex(5); ImGui::Text("%s", spread ? "True" : "False");
-                        ImGui::TableSetColumnIndex(6); ImGui::Text("%s", network_spread ? "True" : "False");
+                        ImGui::TableSetColumnIndex(6); ImGui::Text("%s", network_spread ? "     True" : "     False");
                         ImGui::TableSetColumnIndex(7); ImGui::Text("%s", timestamp.c_str());
                         ImGui::TableSetColumnIndex(8);
                         if (success) {
