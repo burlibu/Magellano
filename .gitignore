@@ -15,11 +15,13 @@ my_imgui_app
 Thumbs.db
 
 # Compiled files
-alberus
-attacks.json
+magellano
+data/
 
 #memos
 memos.txt
 test.drawio
 imgui.ini
 projects-tree.drawio
+TODO.md
+github-cheatsheet.md

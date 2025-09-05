@@ -24,7 +24,7 @@ BACKEND_SOURCES = external/imgui/backends/imgui_impl_glfw.cpp \
 SOURCES = $(PROJECT_SOURCES) $(IMGUI_SOURCES) $(BACKEND_SOURCES)
 
 # Nome dell'eseguibile
-EXE = alberus
+EXE = magellano
 
 # Librerie necessarie
 LIBS = -lGL $(shell pkg-config --static --libs glfw3)

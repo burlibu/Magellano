@@ -46,3 +46,4 @@
 - Aggiunta dipendenza nlohmann/json per la gestione dei file json
 - Aggiunti errori per ip e port
 - Fixed Help tab
+- Cambiato nome del progetto in Magellano

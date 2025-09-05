@@ -10,7 +10,7 @@
 #include <GLFW/glfw3.h>
 
 
-
+#define APP_NAME "Magellano"
 #define APP_VERSION "0.0.5"
 extern const std::string version;
 extern const bool DEBUG; 

@@ -1,2 +1,3 @@
 # Librerie richieste per il progetto
+imgui
 nlohmann_json

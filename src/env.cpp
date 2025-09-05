@@ -10,6 +10,7 @@
 //src
 #include "env.h"
 
+const std::string app_name = APP_NAME;
 const std::string version = APP_VERSION;
 extern const bool DEBUG = true; 
 
