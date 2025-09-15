@@ -66,7 +66,9 @@ extern bool esperimenti_window;
 extern float my_float;
 extern int my_int;
 
-extern const std::string username;
-extern const std::string password;
+extern const std::string _username_;
+extern const std::string _password_;
 
 extern int element_id;
+
+extern bool encryption;

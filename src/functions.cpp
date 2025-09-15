@@ -22,8 +22,14 @@
 #include <fstream>
 #include "json.hpp"
 using json = nlohmann::json;
-
-
+//windows
+#ifdef _WIN32
+#include <windows.h>
+#include <sysinfoapi.h>
+#else//linux
+#include <sys/utsname.h>
+#include <unistd.h>
+#endif
 struct Notification {
     std::string title;
     std::string text;
@@ -33,6 +39,9 @@ struct Notification {
 
 std::vector<Notification> notifications; // creazione vector di notifiche
 
+void setBool(bool &settings_bool, bool valuer) {
+  settings_bool = valuer; // Simply set the boolean to the new value
+}
 
 void showNotification(const std::string& title, const std::string& text, int duration_ms) {
     Notification notification;
@@ -294,4 +303,121 @@ std::string time_t_to_string(time_t t) {
     struct tm* timeinfo = localtime(&t);
     strftime(buffer, sizeof(buffer), "%Y-%m-%d %H:%M:%S", timeinfo);
     return std::string(buffer);
+}
+
+
+
+std::string get_device_name() {
+#ifdef _WIN32
+    char computerName[256];
+    DWORD size = sizeof(computerName);
+    if (GetComputerNameA(computerName, &size)) {
+        return std::string(computerName);
+    }
+    return "Unknown";
+#else
+    struct utsname buf;
+    if (uname(&buf) == 0) {
+        return std::string(buf.nodename);
+    }
+    return "Unknown";
+#endif
+}
+
+std::string get_os_info() {
+#ifdef _WIN32
+    return "Windows";
+#else
+    struct utsname buf;
+    if (uname(&buf) == 0) {
+        std::stringstream ss;
+        ss << buf.sysname << " " << buf.release << " " << buf.version;
+        return ss.str();
+    }
+    return "Unknown";
+#endif
+}
+
+std::string get_cpu_info() {
+#ifdef _WIN32
+    SYSTEM_INFO sysInfo;
+    GetSystemInfo(&sysInfo);
+    std::stringstream ss;
+    ss << "Arch: " << sysInfo.wProcessorArchitecture << ", Cores: " << sysInfo.dwNumberOfProcessors;
+    return ss.str();
+#else
+    long nprocs = sysconf(_SC_NPROCESSORS_ONLN);
+    std::stringstream ss;
+    ss << "Cores: " << nprocs;
+    return ss.str();
+#endif
+}
+
+size_t get_total_ram_mb() {
+#ifdef _WIN32
+    MEMORYSTATUSEX statex;
+    statex.dwLength = sizeof(statex);
+    if (GlobalMemoryStatusEx(&statex)) {
+        return static_cast<size_t>(statex.ullTotalPhys / (1024 * 1024));
+    }
+    return 0;
+#else
+    long pages = sysconf(_SC_PHYS_PAGES);
+    long page_size = sysconf(_SC_PAGE_SIZE);
+    return static_cast<size_t>((pages * page_size) / (1024 * 1024));
+#endif
+}
+
+size_t get_free_ram_mb() {
+#ifdef _WIN32
+    MEMORYSTATUSEX statex;
+    statex.dwLength = sizeof(statex);
+    if (GlobalMemoryStatusEx(&statex)) {
+        return static_cast<size_t>(statex.ullAvailPhys / (1024 * 1024));
+    }
+    return 0;
+#else
+    long free_pages = sysconf(_SC_AVPHYS_PAGES);
+    long page_size = sysconf(_SC_PAGE_SIZE);
+    return static_cast<size_t>((free_pages * page_size) / (1024 * 1024));
+#endif
+}
+
+SystemInfo get_system_info() {
+    SystemInfo info;
+    info.deviceName = get_device_name();
+    // Split OS info into name and version on Windows
+#ifdef _WIN32
+    OSVERSIONINFOA osvi;
+    ZeroMemory(&osvi, sizeof(OSVERSIONINFOA));
+    osvi.dwOSVersionInfoSize = sizeof(OSVERSIONINFOA);
+    
+    #pragma warning(suppress: 4996)
+    if (GetVersionExA(&osvi)) {
+        info.osName = "Windows";
+        std::stringstream ss;
+        ss << osvi.dwMajorVersion << "." << osvi.dwMinorVersion << " (Build " << osvi.dwBuildNumber << ")";
+        info.osVersion = ss.str();
+    } else {
+        info.osName = "Windows";
+        info.osVersion = "Unknown Version";
+    }
+#else
+    struct utsname buf;
+    if (uname(&buf) == 0) {
+        info.osName = buf.sysname;
+        std::stringstream ss;
+        ss << buf.release << " " << buf.version;
+        info.osVersion = ss.str();
+    } else {
+        info.osName = "Unknown";
+        info.osVersion = "Unknown";
+    }
+#endif
+    
+    info.cpuInfo = get_cpu_info();
+    info.totalRamMB = get_total_ram_mb();
+    info.freeRamMB = get_free_ram_mb();
+    
+    return info;
 }

@@ -125,6 +125,7 @@ private:
     void Render() override;
     bool logged = false;
     void isLogged();
+    
 }; // fine classe loginWindow
 
 
@@ -236,6 +237,7 @@ private:
     bool tab1_open = true;
     bool tab2_open = true;
     bool tab3_open = true;
+    bool tab4_open = true;
 
 public: 
     TabWindow(const std::string& title, ImVec2 pos, ImVec2 size, GLFWwindow* win, ImGuiWindowFlags f);

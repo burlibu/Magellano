@@ -47,3 +47,4 @@
 - Aggiunti errori per ip e port
 - Fixed Help tab
 - Cambiato nome del progetto in Magellano
+- todo da sistemare il titolo in alto della finestra principale in magellano

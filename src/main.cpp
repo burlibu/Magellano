@@ -31,7 +31,7 @@ frame_window_manager.Create();
 glfwMakeContextCurrent(frame_window_manager.getWindow());
 glfwSwapInterval(1); // VSync
 
-// Inizializza Dear ImGui
+// Inizializzazione Dear ImGui
 IMGUI_CHECKVERSION();
 ImGui::CreateContext();
 ImGuiIO& io = ImGui::GetIO();
@@ -61,7 +61,7 @@ Gui::showDemoWindow demoWindow(ImVec2(400,400), ImVec2(200,200), frame_p,flags_d
 Gui::Window1 window1(ImVec2(100, 100), ImVec2(500, 400), frame_p, flags_window1);
 Gui::MenuBar menubar(ImVec2(0,0), ImVec2(0,0), frame_p, flags_menu_bar);
 
-Gui::TabWindow tabWindow("TabWindow", ImVec2(0,18), ImVec2(frame_width/6,frame_window_manager.frame_window_heigth - bottombar_height - menubar_height), frame_p, flags_tab_window);
+Gui::TabWindow tabWindow("Tabs", ImVec2(0,18), ImVec2(frame_width/6,frame_window_manager.frame_window_heigth - bottombar_height - menubar_height), frame_p, flags_tab_window);
 Gui::Tree tree("Tree", ImVec2(frame_width/6,menubar_height), ImVec2(2*frame_width/6,400), frame_p, flags_tree);
 Gui::Table table("Attack Log", ImVec2(3*frame_width/6,menubar_height), ImVec2(3*frame_width/6,400), frame_p, flags_table);
 Gui::AttackWindow attack_window(ImVec2(frame_width/6,400+18), ImVec2((5*frame_width/6),(frame_window_manager.frame_window_heigth -400 - menubar_height - bottombar_height)), frame_p,flags_attack_window);
@@ -91,17 +91,36 @@ ImGui::NewFrame();
 //^ ///////////////////////////////////////////////////////// Login Window ///////////////////////////////////////////////////////////
 if (bool_login_window) {
     loginWin.Render();
-    loginWin.isLogged(); // TODO da rendere più sicuro ed efficiente
-    if (!loginWin.logged){
-        bool_my_window = false;
-        bool_window1 = false;
-        bool_demo_window = false;
-        bool_attack_window = false;
+    loginWin.isLogged(); // Controlla lo stato del login
+    
+    // Se l'utente è autenticato, mostra tutte le finestre e nascondi il login
+    if (loginWin.logged) {
+      std::cout << "Login rilevato, attivazione delle finestre..." << std::endl;
+      
+      // Abilita tutte le finestre principali
+      setBool(bool_attack_window, true);
+      setBool(bool_BottomBar, true);
+      setBool(bool_menu_bar, true);
+      setBool(bool_tab_window, true);
+      setBool(bool_Tree, true);
+      setBool(bool_table, true);
+      
+      // Disabilita la finestra di login dopo il successo
+      setBool(bool_login_window, false);
+      
     } else {
-        bool_my_window = true;
-        bool_window1 = true;
-        bool_demo_window = true;
-        bool_attack_window = true;
+      // Se non loggato, mantieni solo la finestra di login
+      setBool(bool_my_window, false);
+      setBool(bool_window1, false);
+      setBool(bool_demo_window, false);
+      setBool(bool_attack_window, false);
+      setBool(bool_settings, false);
+      setBool(bool_HelpWindow, false);
+      setBool(bool_BottomBar, false);
+      setBool(bool_menu_bar, false);
+      setBool(bool_tab_window, false);
+      setBool(bool_Tree, false);
+      setBool(bool_table, false);
     }
 }
 

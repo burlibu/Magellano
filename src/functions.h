@@ -14,6 +14,7 @@
 #include "imgui_impl_opengl3.h"
 #include <GLFW/glfw3.h>
 //src
+
 #include "env.h"
 #include "settings.h"
 
@@ -36,6 +37,25 @@ enum class NotificationType {
 };
 struct Notification;
 
+/**
+ * @brief Struttura per contenere tutte le informazioni di sistema
+ */
+struct SystemInfo {
+    std::string deviceName;
+    std::string osName;
+    std::string osVersion;
+    std::string cpuInfo;
+    size_t totalRamMB;
+    size_t freeRamMB;
+};
+
+/**
+ * @brief Funzione che attiva un bool di una finestra solo se nelle impostazioni è attivo
+ * 
+ * @param b 
+ * @param v 
+ */
+void setBool(bool &b, bool v);
 
 namespace Math {
     /**
@@ -279,3 +299,48 @@ Error checkIp(const std::string& ip);
  * 
  */
 std::string time_t_to_string(time_t t);
+
+// Funzioni di sistema
+/**
+ * @brief Get the device name object
+ * 
+ * @return std::string 
+ */
+std::string get_device_name();
+
+/**
+ * @brief Get the os info object
+ * 
+ * @return std::string 
+ */
+std::string get_os_info();
+
+/**
+ * @brief Get the cpu info object
+ * 
+ * @return std::string 
+ */
+std::string get_cpu_info();
+
+/**
+ * @brief Get the total ram mb object
+ * 
+ * @return size_t 
+ */
+size_t get_total_ram_mb();
+
+/**
+ * @brief Get the free ram mb object
+ * 
+ * @return size_t 
+ */
+size_t get_free_ram_mb();
+
+/**
+ * @brief Get the system information
+ * 
+ * @return SystemInfo 
+ */
+SystemInfo get_system_info();
+
+

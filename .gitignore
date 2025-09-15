@@ -17,6 +17,7 @@ Thumbs.db
 # Compiled files
 magellano
 data/
+examples/
 
 #memos
 memos.txt

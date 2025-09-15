@@ -14,7 +14,7 @@
 GLFWwindow* frame_window = nullptr;
 int frame_window_width_setting = 2550;
 int frame_window_heigth_setting = 1400;
-std::string frame_window_title_setting = "Alberus Project";
+std::string frame_window_title_setting = "Magellano Project";
 GLFWmonitor *frame_window_monitor_setting;
 GLFWwindow *frame_window_share_setting;
 
@@ -22,15 +22,17 @@ bool bool_minimize_and_exit_window      = false;
 bool bool_demo_window                   = false;
 bool bool_my_window                     = false;
 bool bool_window1                       = false;
-bool bool_login_window                  = false;
-bool bool_attack_window            = true;
-bool bool_menu_bar                      = true;
-bool bool_tab_window                    = true;
-bool bool_Tree                          = true;
-bool bool_table                         = true;
-bool bool_settings                      = false;
-bool bool_BottomBar                     = true;
-bool bool_HelpWindow                    = false;
+
+bool bool_login_window                  = true;
+bool bool_attack_window                 = false; // Inizialmente a false
+bool bool_menu_bar                      = false; // Inizialmente a false
+bool bool_tab_window                    = false; // Inizialmente a false
+bool bool_Tree                          = false; // Inizialmente a false
+bool bool_table                         = false; // Inizialmente a false
+bool bool_BottomBar                     = false; // Inizialmente a false
+
+bool bool_settings                      = true;
+bool bool_HelpWindow                    = true;
 
 ImGuiWindowFlags flags_minimize_and_exit_window =
     ImGuiWindowFlags_NoTitleBar 
@@ -147,7 +149,9 @@ float my_float = 0.0f;
 int my_int = 0;
 
 
-const std::string username = "admin";
-const std::string password = "password";
+const std::string _username_ = "admin";
+const std::string _password_ = "password";
 
 int element_id = 0;
+
+bool encryption = false; // senza encryption funziona
