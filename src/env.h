@@ -14,5 +14,6 @@
 #define APP_VERSION "0.0.5"
 extern const std::string version;
 extern const bool DEBUG; 
+extern const bool DEV;
 
 extern const std::string attacks_file_path;

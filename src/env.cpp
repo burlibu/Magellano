@@ -13,5 +13,6 @@
 const std::string app_name = APP_NAME;
 const std::string version = APP_VERSION;
 extern const bool DEBUG = true; 
+extern const bool DEV = true; 
 
 const std::string attacks_file_path = "data/attacks.json";

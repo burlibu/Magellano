@@ -24,6 +24,30 @@
 #include "json.hpp"
 using json = nlohmann::json;
 
+/**
+ * @brief Funzione di debug che stampa l' argomento dato
+ * 
+ * @tparam T 
+ * @param a 
+ */
+template<typename T>
+void db(const T& a) {
+  cout << a << "\n";
+}
+/**
+ * @brief Funzione di debug che stampa gli argomenti dati
+ * 
+ * @tparam T 
+ * @tparam Args 
+ * @param first 
+ * @param rest 
+ */
+template<typename T, typename... Args>
+void db(const T& first, const Args&... rest) {
+    std::cout << first << " ";
+    db(rest...);
+}
+
 enum class Error {
     OK,
     FAIL

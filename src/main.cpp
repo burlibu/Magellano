@@ -92,7 +92,9 @@ ImGui::NewFrame();
 if (bool_login_window) {
     loginWin.Render();
     loginWin.isLogged(); // Controlla lo stato del login
-    
+    if (DEV) { // developer mode
+      loginWin.logged = true;
+    }
     // Se l'utente è autenticato, mostra tutte le finestre e nascondi il login
     if (loginWin.logged) {
       std::cout << "Login rilevato, attivazione delle finestre..." << std::endl;

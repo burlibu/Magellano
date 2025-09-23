@@ -96,7 +96,8 @@ namespace Gui {
     void LoginWindow::isLogged(){
         if (login_success) {
             logged = true;
-            std::cout << "Login effettuato con successo, stato logged = " << logged << std::endl;
+            db("Login effettuato con successo, stato logged = "); 
+            db(logged);
         } else {
             logged = false;
         }
