@@ -12,7 +12,7 @@
 #include "env.h"
 
 // frame che ospiterà le finestre
-
+// commento di prova
 extern int frame_window_width_setting;
 extern int frame_window_heigth_setting;
 extern std::string frame_window_title_setting;
