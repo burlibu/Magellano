@@ -16,6 +16,7 @@ Thumbs.db
 
 # Compiled files
 magellano
+alberus
 data/
 examples/
 
@@ -26,3 +27,5 @@ imgui.ini
 projects-tree.drawio
 TODO.md
 github-cheatsheet.md
+#docs
+docs/
