@@ -8,6 +8,8 @@
 #include <random>
 #include <regex>
 #include <ctime>
+#include <algorithm>
+
 //imgui
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
@@ -420,4 +422,54 @@ SystemInfo get_system_info() {
     info.freeRamMB = get_free_ram_mb();
     
     return info;
+}
+
+bool get_monitor_resolution(int* width, int* height) {
+    if (!glfwInit()) {
+        return false;
+    }
+    
+    GLFWmonitor* monitor = glfwGetPrimaryMonitor();
+    if (!monitor) {
+        glfwTerminate();
+        return false;
+    }
+    
+    const GLFWvidmode* mode = glfwGetVideoMode(monitor);
+    if (!mode) {
+        glfwTerminate();
+        return false;
+    }
+    
+    *width = mode->width;
+    *height = mode->height;
+    
+    return true;
+}
+
+std::pair<int, int> calculate_window_size(float scale_factor) {
+    int monitor_width, monitor_height;
+    
+    if (!get_monitor_resolution(&monitor_width, &monitor_height)) {
+        // Fallback to default values if monitor detection fails
+        return std::make_pair(1920, 1080);
+    }
+    
+    // Calcola le dimensioni della finestra come percentuale del monitor
+    int window_width = static_cast<int>(monitor_width * scale_factor);
+    int window_height = static_cast<int>(monitor_height * scale_factor);
+    
+    // Assicurati che le dimensioni minime siano rispettate
+    window_width = std::max(window_width, 800);
+    window_height = std::max(window_height, 600);
+    
+    return std::make_pair(window_width, window_height);
+}
+
+void initialize_window_settings(float scale_factor) {
+    std::pair<int, int> window_size = calculate_window_size(scale_factor);
+    frame_window_width_setting = window_size.first;
+    frame_window_heigth_setting = window_size.second;
+    
+    db("Dimensioni finestra calcolate dinamicamente:", frame_window_width_setting, "x", frame_window_heigth_setting);
 }

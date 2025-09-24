@@ -8,6 +8,7 @@
 #include <random>
 #include <regex>
 #include <ctime>
+#include <algorithm>
 // imgui
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
@@ -23,6 +24,7 @@
 #include <fstream>
 #include "json.hpp"
 using json = nlohmann::json;
+using namespace std;
 
 /**
  * @brief Funzione di debug che stampa l' argomento dato
@@ -366,5 +368,29 @@ size_t get_free_ram_mb();
  * @return SystemInfo 
  */
 SystemInfo get_system_info();
+
+/**
+ * @brief Get the primary monitor resolution
+ * 
+ * @param width pointer to store monitor width
+ * @param height pointer to store monitor height
+ * @return true if successful, false otherwise
+ */
+bool get_monitor_resolution(int* width, int* height);
+
+/**
+ * @brief Calculate optimal window size based on monitor resolution
+ * 
+ * @param scale_factor percentage of monitor size to use (0.0 to 1.0)
+ * @return std::pair<int, int> width and height
+ */
+std::pair<int, int> calculate_window_size(float scale_factor = 0.8f);
+
+/**
+ * @brief Initialize window settings with dynamic resolution
+ * 
+ * @param scale_factor percentage of monitor size to use (0.0 to 1.0)
+ */
+void initialize_window_settings(float scale_factor = 0.8f);
 
 
