@@ -1,0 +1,5 @@
+- Implementare Login fatto
+- Fare una funzione di crittografia per crittografare data: posso fare delle funzioni mie per ogni cifrario su Notion
+- Disabilitare i docs
+- implementare voci Network e Firewall
+- Eliminare il compiled alberus (inutile ormai)

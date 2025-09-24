@@ -21,11 +21,13 @@ data/
 examples/
 
 #memos
-memos.txt
-test.drawio
+
+#test.drawio
 imgui.ini
-projects-tree.drawio
-TODO.md
+#projects-tree.drawio
+#TODO.md
 github-cheatsheet.md
 #docs
-docs/
+docs/crypto_usage.md
+docs/github-cheatsheet.md
+login_fix.md

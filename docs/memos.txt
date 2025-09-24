@@ -1,0 +1,197 @@
+nel mardown per andare a capo basta lasciare una riga di spazio 
+per inserire codice basta inserirlo tra `codice` che si fanno con alt + 96
+
+MEMO2
+ ImVec2 window1_vec2;  //creo un vettore per setNextWindowsSize per dirgli le misure ma basta semplicemente mettere come argomento a SetNextWindowSize(ImVec2(x,y))
+
+window1_vec2.x = 400;
+window1_vec2.y = 600;
+
+un altro modo per inizializzare un ImVec2 è:
+ImVec2 a = {200, 300};
+
+MEMO3
+
+Il metodo .c_str() è una funzione membro delle stringhe C++ (std::string) che restituisce 
+un puntatore a una stringa in stile C (cioè un array di caratteri terminato da \0).
+
+Es:
+```
+std::string testo = "Ciao mondo";
+printf("%s\n", testo.c_str()); // printf vuole un const char*
+```
+```
+ImGui::Text(notification.title.c_str());
+Qui notification.title è una std::string, ma ImGui::Text vuole un const char*, quindi usi .c_str().
+```
+
+MEMO4
+
+Il file imgui.ini è un file di configurazione che viene generato e gestito automaticamente da ImGui.
+A cosa serve imgui.ini?
+Questo file memorizza le impostazioni delle finestre dell’interfaccia grafica, come:
+Posizione delle finestre
+Dimensione delle finestre
+Stato di apertura/chiusura
+Altre proprietà personalizzate delle finestre
+In pratica, serve a ricordare come avevi sistemato le finestre la volta precedente, così quando riapri il programma,
+l’interfaccia appare esattamente come l’avevi lasciata.
+Come funziona?
+Ogni volta che chiudi il programma, ImGui salva automaticamente le informazioni delle finestre in questo file.
+Quando riapri il programma, ImGui legge il file e ripristina posizione e dimensione delle finestre.
+
+MEMO5
+"%s" è un specificatore di formato (format specifier) usato nelle funzioni di formattazione come printf, sprintf, e alcune funzioni ImGui.
+Cosa significa?
+%s = stringa (string)
+%d = numero intero (decimal)
+%f = numero decimale (float)
+%c = carattere singolo (character)
+```
+const char* nome = "Mario";
+int eta = 25;
+float altezza = 1.75f;
+
+printf("Nome: %s, Età: %d, Altezza: %.2f", nome, eta, altezza);
+// Output: "Nome: Mario, Età: 25, Altezza: 1.75"
+```
+%s viene sostituito con il valore della variabile nome
+%d viene sostituito con il valore della variabile eta
+%.2f viene sostituito con il valore della variabile altezza (con 2 decimali)
+
+MEMO6
+Spiegazione dei tag Doxygen:
+@brief: Breve descrizione della funzione
+@param[in]: Parametro di input (c'è anche @param[out] per output e @param[in,out] per entrambi)
+@errors: Possibili errori
+@thread_safety: Sicurezza per thread multipli
+@sa: "See also" - altre funzioni correlate
+@since: Da quale versione è disponibile
+@ingroup: Gruppo di appartenenza
+Per attivare la formattazione del codice nei commenti:
+Usa \c per codice inline: \c duration_ms
+Usa \code e \endcode per blocchi di codice
+Usa @code e @endcode per esempi
+
+MEMO7
+La funzione Begin utilizza un bitmask per i ImGuiWindowsFlags ovvero si aspetta un intero. Preimpostato c' è qualcosa come 000000
+Ogni parametro che che ci metti viene messo a OR bit a bit con questo valore.
+Per esempio se attivi ImGuiWindowFlags_NoMove che magari è 001000 il valore di partenza diventa 001000.
+si usa un enum come 
+```
+enum ImGuiWindowFlags_ {
+    ImGuiWindowFlags_None           = 0,
+    ImGuiWindowFlags_NoTitleBar     = 1 << 0, // 0001
+    ImGuiWindowFlags_NoResize       = 1 << 1, // 0010
+    ImGuiWindowFlags_NoMove         = 1 << 2, // 0100
+    ImGuiWindowFlags_NoCollapse     = 1 << 5, // 100000
+    ImGuiWindowFlags_AlwaysAutoResize = 1 << 6, // 1000000
+    // ... altri flag ...
+};
+```
+
+
+virtual si può usare solo nelle funzioni membro delle classi e le classi derivate possono overridare la funzione.
+
+# ImGuiWindowFlags
+
+Ecco una lista di tutte le ImGuiWindowFlags disponibili con spiegazioni:
+
+## Flags Principali
+
+ImGuiWindowFlags_None                   = 0
+- Nessun flag, comportamento predefinito.
+
+ImGuiWindowFlags_NoTitleBar             = 1 << 0
+- Disabilita la barra del titolo della finestra.
+
+ImGuiWindowFlags_NoResize               = 1 << 1
+- Disabilita il ridimensionamento della finestra tramite l'impugnatura nell'angolo in basso a destra.
+
+ImGuiWindowFlags_NoMove                 = 1 << 2
+- Disabilita lo spostamento della finestra da parte dell'utente.
+
+ImGuiWindowFlags_NoScrollbar            = 1 << 3
+- Disabilita le barre di scorrimento (la finestra può comunque scorrere con il mouse o programmaticamente).
+
+ImGuiWindowFlags_NoScrollWithMouse      = 1 << 4
+- Disabilita lo scorrimento verticale con la rotella del mouse. Nelle finestre figlie, la rotella del mouse verrà inoltrata al genitore a meno che non sia impostato anche NoScrollbar.
+
+ImGuiWindowFlags_NoCollapse             = 1 << 5
+- Disabilita la possibilità di comprimere la finestra facendo doppio clic su di essa. Chiamato anche pulsante del menu della finestra (ad esempio all'interno di un nodo di ancoraggio).
+
+ImGuiWindowFlags_AlwaysAutoResize       = 1 << 6
+- Ridimensiona automaticamente ogni finestra in base al suo contenuto ad ogni frame.
+
+ImGuiWindowFlags_NoBackground           = 1 << 7
+- Disabilita il disegno del colore di sfondo (WindowBg, ecc.) e del bordo esterno. Simile all'uso di SetNextWindowBgAlpha(0.0f).
+
+ImGuiWindowFlags_NoSavedSettings        = 1 << 8
+- Non carica/salva mai le impostazioni nel file .ini.
+
+ImGuiWindowFlags_NoMouseInputs          = 1 << 9
+- Disabilita la cattura del mouse, il test di hover passerà attraverso.
+
+ImGuiWindowFlags_MenuBar                = 1 << 10
+- La finestra ha una barra dei menu.
+
+ImGuiWindowFlags_HorizontalScrollbar    = 1 << 11
+- Consente la visualizzazione della barra di scorrimento orizzontale (disattivata per impostazione predefinita). Puoi usare SetNextWindowContentSize(ImVec2(width,0.0f)); prima di chiamare Begin() per specificare la larghezza.
+
+ImGuiWindowFlags_NoFocusOnAppearing     = 1 << 12
+- Disabilita l'acquisizione del focus quando si passa dallo stato nascosto a quello visibile.
+
+ImGuiWindowFlags_NoBringToFrontOnFocus  = 1 << 13
+- Disabilita il portare la finestra in primo piano quando si acquisisce il focus (ad esempio cliccandoci sopra o dandole focus programmaticamente).
+
+ImGuiWindowFlags_AlwaysVerticalScrollbar= 1 << 14
+- Mostra sempre la barra di scorrimento verticale (anche se ContentSize.y < Size.y).
+
+ImGuiWindowFlags_AlwaysHorizontalScrollbar=1<< 15
+- Mostra sempre la barra di scorrimento orizzontale (anche se ContentSize.x < Size.x).
+
+ImGuiWindowFlags_NoNavInputs            = 1 << 16
+- Nessuna navigazione con tastiera/gamepad all'interno della finestra.
+
+ImGuiWindowFlags_NoNavFocus             = 1 << 17
+- Nessun focus verso questa finestra con la navigazione da tastiera/gamepad (ad esempio, saltata da CTRL+TAB).
+
+ImGuiWindowFlags_UnsavedDocument        = 1 << 18
+- Visualizza un punto accanto al titolo. Quando utilizzato in un contesto di schede/ancoraggio, la scheda viene selezionata quando si fa clic sulla X + la chiusura non è presunta (attenderà che l'utente smetta di inviare la scheda). Altrimenti, la chiusura è presunta quando si preme la X, quindi se continui a inviare la scheda potrebbe riapparire alla fine della barra delle schede.
+
+## Combinazioni di Flags
+
+ImGuiWindowFlags_NoNav                  = ImGuiWindowFlags_NoNavInputs | ImGuiWindowFlags_NoNavFocus
+- Disabilita completamente la navigazione per questa finestra.
+
+ImGuiWindowFlags_NoDecoration           = ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoCollapse
+- Rimuove tutte le decorazioni della finestra.
+
+ImGuiWindowFlags_NoInputs               = ImGuiWindowFlags_NoMouseInputs | ImGuiWindowFlags_NoNavInputs | ImGuiWindowFlags_NoNavFocus
+- Disabilita tutti gli input per questa finestra.
+
+## Flags per Uso Interno (non usare direttamente)
+
+ImGuiWindowFlags_ChildWindow            = 1 << 24
+- Non usare! Per uso interno da BeginChild().
+
+ImGuiWindowFlags_Tooltip                = 1 << 25
+- Non usare! Per uso interno da BeginTooltip().
+
+ImGuiWindowFlags_Popup                  = 1 << 26
+- Non usare! Per uso interno da BeginPopup().
+
+ImGuiWindowFlags_Modal                  = 1 << 27
+- Non usare! Per uso interno da BeginPopupModal().
+
+ImGuiWindowFlags_ChildMenu              = 1 << 28
+- Non usare! Per uso interno da BeginMenu().
+
+## Flags Obsolete
+
+ImGuiWindowFlags_NavFlattened           = 1 << 29
+- Obsoleto in 1.90.9: Usa ImGuiChildFlags_NavFlattened nella chiamata BeginChild().
+
+ImGuiWindowFlags_AlwaysUseWindowPadding = 1 << 30
+- Obsoleto in 1.90.0: Usa ImGuiChildFlags_AlwaysUseWindowPadding nella chiamata BeginChild().
+
