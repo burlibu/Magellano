@@ -33,14 +33,17 @@ namespace Gui {
         ImGui::SameLine();
         ImGui::SetNextItemWidth(150); // Imposta la larghezza desiderata in pixel
         static char port_str[8] = "";
-        ImGui::InputText("Target port", port_str, IM_ARRAYSIZE(port_str));
+        ImGui::InputText("Target port", port_str, IM_ARRAYSIZE(port_str)); db(port_str);
         // Conversione sicura
         int port = 0;
         if (strlen(port_str) > 0 && std::all_of(port_str, port_str + strlen(port_str), ::isdigit)) {
             port = std::stoi(port_str);
+            db("[Port OK: port_int: ", port, "port_str: ", port_str, " ]");
             // Usa port come intero
         } else {
             errors.push_back("Invalid port number");
+            db("[Port ERROR: ", port, "port_str: ", port_str, " ]");
+
         }
 
         // Checkbox
@@ -79,6 +82,7 @@ namespace Gui {
         ImGui::PopStyleVar();
         if (errors.size() > 0) {
             ImGui::Text("Error: %s", errors.back().c_str());
+            if (DEBUG) cout << errors.back().c_str();
         } 
         else {
             ImGui::Text("No errors occurred.");

@@ -109,7 +109,9 @@ if (bool_login_window) {
       setBool(bool_tab_window, true);
       setBool(bool_Tree, true);
       setBool(bool_table, true);
-      
+      setBool(bool_settings, false);
+      setBool(bool_HelpWindow, false);
+
       // Disabilita la finestra di login dopo il successo
       setBool(bool_login_window, false);
       

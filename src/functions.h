@@ -27,17 +27,17 @@ using json = nlohmann::json;
 using namespace std;
 
 /**
- * @brief Funzione di debug che stampa l' argomento dato
+ * @brief Funzione di debug che stampa l' argomento dato solo se DEBUG
  * 
  * @tparam T 
  * @param a 
  */
 template<typename T>
 void db(const T& a) {
-  cout << a << "\n";
+  if (DEBUG) cout << a << "\n";
 }
 /**
- * @brief Funzione di debug che stampa gli argomenti dati
+ * @brief Funzione di debug che stampa gli argomenti dati solo se DEBUG
  * 
  * @tparam T 
  * @tparam Args 
@@ -46,7 +46,8 @@ void db(const T& a) {
  */
 template<typename T, typename... Args>
 void db(const T& first, const Args&... rest) {
-    std::cout << first << " ";
+  
+    if (DEBUG) std::cout << first << " ";
     db(rest...);
 }
 

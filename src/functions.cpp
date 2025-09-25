@@ -247,6 +247,7 @@ void attack(const std::string& target_ip, const int& port, const std::string& at
     std::string timestamp_str = time_t_to_string(timestamp);
 
     save_attack_json(target_ip, port, attack_type, claymore, spread, network_spread, success, timestamp_str);
+    db("Attack creation failed");
 }
 
 void save_attack_json(const std::string& ip, const int& port, const std::string& attack_type, bool claymore, bool spread, bool network_spread, bool success, std::string timestamp) {
