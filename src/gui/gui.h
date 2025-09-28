@@ -41,6 +41,13 @@ public:
      * Funzione che ritorna il puntatore GLFWwindow* alla finestra principale
      */
     GLFWwindow* getWindow() const;
+    
+    /**
+     * Getter per le dimensioni aggiornate della finestra
+     */
+    int getCurrentWidth() const { return frame_window_width; }
+    int getCurrentHeight() const { return frame_window_heigth; }
+    
     Error RenderFrame(const ImVec4& clear_color);
     void CleanUp();
 

@@ -394,4 +394,12 @@ std::pair<int, int> calculate_window_size(float scale_factor = 0.8f);
  */
 void initialize_window_settings(float scale_factor = 0.8f);
 
+/**
+ * @brief Update ImGui windows to fit current screen size
+ * 
+ * @param window_width current window width
+ * @param window_height current window height
+ */
+void update_imgui_layout(int window_width, int window_height);
+
 

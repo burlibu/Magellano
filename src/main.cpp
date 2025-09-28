@@ -64,15 +64,15 @@ Gui::showDemoWindow demoWindow(ImVec2(400,400), ImVec2(200,200), frame_p,flags_d
 Gui::Window1 window1(ImVec2(100, 100), ImVec2(500, 400), frame_p, flags_window1);
 Gui::MenuBar menubar(ImVec2(0,0), ImVec2(0,0), frame_p, flags_menu_bar);
 
-Gui::TabWindow tabWindow("Tabs", ImVec2(0,18), ImVec2(frame_width/6,frame_window_manager.frame_window_heigth - bottombar_height - menubar_height), frame_p, flags_tab_window);
-Gui::Tree tree("Tree", ImVec2(frame_width/6,menubar_height), ImVec2(2*frame_width/6,400), frame_p, flags_tree);
-Gui::Table table("Attack Log", ImVec2(3*frame_width/6,menubar_height), ImVec2(3*frame_width/6,400), frame_p, flags_table);
-Gui::AttackWindow attack_window(ImVec2(frame_width/6,400+18), ImVec2((5*frame_width/6),(frame_window_manager.frame_window_heigth -400 - menubar_height - bottombar_height)), frame_p,flags_attack_window);
+Gui::TabWindow tabWindow("Tabs", ImVec2(0,18), ImVec2(frame_window_manager.getCurrentWidth()/6,frame_window_manager.getCurrentHeight() - bottombar_height - menubar_height), frame_p, flags_tab_window);
+Gui::Tree tree("Tree", ImVec2(frame_window_manager.getCurrentWidth()/6,menubar_height), ImVec2(2*frame_window_manager.getCurrentWidth()/6,400), frame_p, flags_tree);
+Gui::Table table("Attack Log", ImVec2(3*frame_window_manager.getCurrentWidth()/6,menubar_height), ImVec2(3*frame_window_manager.getCurrentWidth()/6,400), frame_p, flags_table);
+Gui::AttackWindow attack_window(ImVec2(frame_window_manager.getCurrentWidth()/6,400+18), ImVec2((5*frame_window_manager.getCurrentWidth()/6),(frame_window_manager.getCurrentHeight() -400 - menubar_height - bottombar_height)), frame_p,flags_attack_window);
 
 
-Gui::BottomBar bottomBar("BottomBar", ImVec2(500,500), ImVec2(frame_width, 35.0f), frame_p, flags_BottomBar);
-Gui::HelpWindow helpWindow("Help", ImVec2(0,0 + menubar.GetPos().y), ImVec2(frame_window_manager.frame_window_width,frame_window_manager.frame_window_heigth - menubar.GetPos().y), frame_p, flags_HelpWindow);
-Gui::SettingsWindow settingsWindow(ImVec2(0,0 + menubar.GetPos().y), ImVec2(frame_window_manager.frame_window_width,frame_window_manager.frame_window_heigth - menubar.GetPos().y), frame_p, flags_settings);
+Gui::BottomBar bottomBar("BottomBar", ImVec2(500,500), ImVec2(frame_window_manager.getCurrentWidth(), 35.0f), frame_p, flags_BottomBar);
+Gui::HelpWindow helpWindow("Help", ImVec2(0,0 + menubar.GetPos().y), ImVec2(frame_window_manager.getCurrentWidth(),frame_window_manager.getCurrentHeight() - menubar.GetPos().y), frame_p, flags_HelpWindow);
+Gui::SettingsWindow settingsWindow(ImVec2(0,0 + menubar.GetPos().y), ImVec2(frame_window_manager.getCurrentWidth(),frame_window_manager.getCurrentHeight() - menubar.GetPos().y), frame_p, flags_settings);
 
 
 
@@ -86,6 +86,18 @@ Gui::SettingsWindow settingsWindow(ImVec2(0,0 + menubar.GetPos().y), ImVec2(fram
 //* /////////////////////////////////////////////////////////// Loop principale ///////////////////////////////////////////////////////
 while (!glfwWindowShouldClose(frame_window_manager.getWindow())) {
 glfwPollEvents();
+
+// Controlla se la finestra è stata ridimensionata e aggiorna le dimensioni
+static int last_width = 0, last_height = 0;
+glfwGetFramebufferSize(frame_window_manager.getWindow(), &frame_width, &frame_height);
+glViewport(0, 0, frame_width, frame_height);
+
+// Se le dimensioni sono cambiate, aggiorna il layout
+if (frame_width != last_width || frame_height != last_height) {
+    update_imgui_layout(frame_width, frame_height);
+    last_width = frame_width;
+    last_height = frame_height;
+}
 
 // Start the Dear ImGui frame
 ImGui_ImplOpenGL3_NewFrame();
@@ -156,6 +168,9 @@ if (bool_demo_window) {
 
 //! ///////////////////////////////////////////////////////// Attack window //////////////////////////////////////////////////////
 if (bool_attack_window) {
+    // Aggiorna posizione e dimensioni dinamicamente
+    attack_window.SetPos(ImVec2(frame_window_manager.getCurrentWidth()/6, 400 + 18));
+    attack_window.SetSize(ImVec2(5*frame_window_manager.getCurrentWidth()/6, frame_window_manager.getCurrentHeight() - 400 - menubar_height - bottombar_height));
     attack_window.Render();
 }
 
@@ -167,16 +182,25 @@ if (bool_menu_bar) {
 
 //////////////////////////////////////////////////////////// Tab Window /////////////////////////////////////////////////////////////////
 if (bool_tab_window) {
+    // Aggiorna posizione e dimensioni dinamicamente basandosi sulla classe FrameWindowManager
+    tabWindow.SetPos(ImVec2(0, 18));
+    tabWindow.SetSize(ImVec2(frame_window_manager.getCurrentWidth()/6, frame_window_manager.getCurrentHeight() - bottombar_height - menubar_height));
     tabWindow.Render();
 }
 
 /////////////////////////////////////////////////////////// Tree ////////////////////////////////////////////////////////////////////////
 if (bool_Tree) {
-tree.Render();
+    // Aggiorna posizione e dimensioni dinamicamente
+    tree.SetPos(ImVec2(frame_window_manager.getCurrentWidth()/6, menubar_height));
+    tree.SetSize(ImVec2(2*frame_window_manager.getCurrentWidth()/6, 400));
+    tree.Render();
 }
 /////////////////////////////////////////////////////////// Table //////////////////////////////////////////////////////////////////////////
 if (bool_table) {
-table.Render();
+    // Aggiorna posizione e dimensioni dinamicamente
+    table.SetPos(ImVec2(3*frame_window_manager.getCurrentWidth()/6, menubar_height));
+    table.SetSize(ImVec2(3*frame_window_manager.getCurrentWidth()/6, 400));
+    table.Render();
 }
 /////////////////////////////////////////////////////////// Settings Window //////////////////////////////////////////////////////////////////////////
 if (bool_settings) {
@@ -188,7 +212,10 @@ helpWindow.Render();
 }
 if (bool_BottomBar)
 {
-bottomBar.Render();
+    // Aggiorna posizione e dimensioni dinamicamente per la BottomBar
+    bottomBar.SetPos(ImVec2(0, frame_window_manager.getCurrentHeight() - bottombar_height));
+    bottomBar.SetSize(ImVec2(frame_window_manager.getCurrentWidth(), bottombar_height));
+    bottomBar.Render();
 }
 element_id = 0;
 
