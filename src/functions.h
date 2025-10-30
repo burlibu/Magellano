@@ -27,7 +27,7 @@ using json = nlohmann::json;
 using namespace std;
 
 /**
- * @brief Funzione di debug che stampa l' argomento dato solo se DEBUG
+ * @brief Funzione di debug che stampa l' argomento dato solo se il bool DEBUG da env.h è true
  * 
  * @tparam T 
  * @param a 
@@ -37,7 +37,7 @@ void db(const T& a) {
   if (DEBUG) cout << a << "\n";
 }
 /**
- * @brief Funzione di debug che stampa gli argomenti dati solo se DEBUG
+ * @brief Funzione di debug che stampa gli argomenti dati solo se il bool DEBUG da env.h è true
  * 
  * @tparam T 
  * @tparam Args 
@@ -46,7 +46,6 @@ void db(const T& a) {
  */
 template<typename T, typename... Args>
 void db(const T& first, const Args&... rest) {
-  
     if (DEBUG) std::cout << first << " ";
     db(rest...);
 }
