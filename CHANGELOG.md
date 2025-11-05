@@ -48,3 +48,12 @@
 - Fixed Help tab
 - Cambiato nome del progetto in Magellano
 - todo da sistemare il titolo in alto della finestra principale in magellano
+
+##Version 0.0.6
+
+## 11/5/2025
+
+- Risistemata directory
+- Sistemato il Makefile
+- Sistemato bug di non-resize delle finestre. Bisognava settare imguiCond_Always
+- Non Testata profondamente

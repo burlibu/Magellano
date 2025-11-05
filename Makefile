@@ -4,10 +4,27 @@ CXXFLAGS = -std=c++11 -Wall -Wextra -g
 INCLUDES = -Iinclude -Iexternal/imgui -Iexternal/imgui/backends -Iassets -Iexternal/json -Iexternal/cryptopp/cryptopp-CRYPTOPP_8_7_0
 
 # File sorgente del tuo progetto
-PROJECT_SOURCES = src/main.cpp src/custom_colors.cpp src/env.cpp src/settings.cpp src/functions.cpp src/crypto_utils.cpp \
-     src/gui/Attack.cpp src/gui/BottomBar.cpp src/gui/Demo.cpp src/gui/FrameManager.cpp \
-    src/gui/Help.cpp src/gui/Login.cpp src/gui/MenuBar.cpp src/gui/MinimizeAndExit.cpp src/gui/Settings.cpp \
-    src/gui/ShowMyWindow.cpp src/gui/Table.cpp src/gui/TabWindow.cpp src/gui/Tree.cpp src/gui/Window1.cpp
+PROJECT_SOURCES = \
+    src/main.cpp \
+    src/lib/custom_colors.cpp \
+    src/settings/env.cpp \
+    src/settings/settings.cpp \
+    src/lib/functions.cpp \
+    src/lib/crypto_utils.cpp \
+    src/gui/Attack.cpp \
+    src/gui/BottomBar.cpp \
+    src/gui/Demo.cpp \
+    src/gui/FrameManager.cpp \
+    src/gui/Help.cpp \
+    src/gui/Login.cpp \
+    src/gui/MenuBar.cpp \
+    src/gui/MinimizeAndExit.cpp \
+    src/gui/Settings.cpp \
+    src/gui/ShowMyWindow.cpp \
+    src/gui/Table.cpp \
+    src/gui/TabWindow.cpp \
+    src/gui/Tree.cpp \
+    src/gui/Window1.cpp
 
 # File sorgente di Dear ImGui
 IMGUI_SOURCES = external/imgui/imgui.cpp \

@@ -16,10 +16,9 @@
 #include <GLFW/glfw3.h>
 //src
 
-#include "env.h"
-#include "settings.h"
-
-#include "custom_colors.h"
+#include "../settings/env.h"
+#include "../settings/settings.h"
+#include "../lib/custom_colors.h"
 //json
 #include <fstream>
 #include "json.hpp"

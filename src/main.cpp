@@ -8,10 +8,10 @@
 #include "imgui_impl_opengl3.h"
 #include <GLFW/glfw3.h>
 //src
-#include "env.h"
-#include "settings.h"
-#include "functions.h"
-#include "custom_colors.h"
+#include "settings/env.h"
+#include "settings/settings.h"
+#include "lib/functions.h"
+#include "lib/custom_colors.h"
 #include "gui/gui.h"
 
 
@@ -26,9 +26,14 @@ return -1;
 initialize_window_settings(0.8f); // Usa 80% delle dimensioni del monitor
 
 // Crea la finestra
-Gui::FrameWindowManager frame_window_manager(frame_window_width_setting,frame_window_heigth_setting,frame_window_title_setting,frame_window_monitor_setting,
-                                        frame_window_share_setting);
-frame_window_manager.Create();
+Gui::FrameWindowManager frame_window_manager(
+  frame_window_width_setting,
+  frame_window_heigth_setting,
+  frame_window_title_setting,
+  frame_window_monitor_setting,
+  frame_window_share_setting
+);
+frame_window_manager.Create(); 
 
 
 glfwMakeContextCurrent(frame_window_manager.getWindow());
@@ -204,14 +209,14 @@ if (bool_table) {
 }
 /////////////////////////////////////////////////////////// Settings Window //////////////////////////////////////////////////////////////////////////
 if (bool_settings) {
-settingsWindow.Render();
+    settingsWindow.Render();
 }
-if (bool_HelpWindow)
-{
-helpWindow.Render();
+/////////////////////////////////////////////////////////// Help Window //////////////////////////////////////////////////////////////////////////
+if (bool_HelpWindow) {
+    helpWindow.Render();
 }
-if (bool_BottomBar)
-{
+//////////////////////////////////////////////////////////// Bottom Bar //////////////////////////////////////////////////////////////////////////
+if (bool_BottomBar) {
     // Aggiorna posizione e dimensioni dinamicamente per la BottomBar
     bottomBar.SetPos(ImVec2(0, frame_window_manager.getCurrentHeight() - bottombar_height));
     bottomBar.SetSize(ImVec2(frame_window_manager.getCurrentWidth(), bottombar_height));
@@ -229,8 +234,8 @@ element_id = 0;
 
 
 
-// Rendering frame principale
-frame_window_manager.RenderFrame(blu);
+
+frame_window_manager.RenderFrame(blu); // Rendering frame principale
 } // fine while principale
 
 // Cleanup

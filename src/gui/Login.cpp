@@ -8,11 +8,11 @@
 #include "imgui_impl_opengl3.h"
 #include <GLFW/glfw3.h>
 //src
-#include "../env.h"
-#include "../settings.h"
-#include "../functions.h"
-#include "../custom_colors.h"
-#include "../crypto_utils.h"
+#include "../settings/env.h"
+#include "../settings/settings.h"
+#include "../lib/functions.h"
+#include "../lib/custom_colors.h"
+#include "../lib/crypto_utils.h"
 #include "gui.h"
 
 using namespace std;
@@ -29,8 +29,8 @@ namespace Gui {
      * Attenzione: chiama checkWindowSize se DEBUG è attivo
      */
     void LoginWindow::Render() {
-        ImGui::SetNextWindowPos(pos, ImGuiCond_FirstUseEver);
-        ImGui::SetNextWindowSize(size, ImGuiCond_FirstUseEver);
+        ImGui::SetNextWindowPos(pos, ImGuiCond_Always);
+        ImGui::SetNextWindowSize(size, ImGuiCond_Always);
         if (ImGui::Begin(title.c_str(), &isOpen, ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoResize |ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoSavedSettings)) {
             ImGui::InputText("Username", username, IM_ARRAYSIZE(username));
             ImGui::InputText("Password", password, IM_ARRAYSIZE(password), ImGuiInputTextFlags_Password);

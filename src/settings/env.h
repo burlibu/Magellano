@@ -11,7 +11,7 @@
 
 
 #define APP_NAME "Magellano"
-#define APP_VERSION "0.0.5"
+#define APP_VERSION "0.0.6"
 extern const std::string version;
 extern const bool DEBUG; 
 extern const bool DEV;

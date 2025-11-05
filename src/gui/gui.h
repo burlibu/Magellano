@@ -9,10 +9,10 @@
 #include "imgui_impl_opengl3.h"
 #include <GLFW/glfw3.h>
 //src
-#include "../env.h"
-#include "../settings.h"
-#include "../functions.h"
-#include "../custom_colors.h"
+#include "../settings/env.h"
+#include "../settings/settings.h"
+#include "../lib/functions.h"
+#include "../lib/custom_colors.h"
 
 namespace Gui {
 /**

@@ -8,10 +8,10 @@
 #include "imgui_impl_opengl3.h"
 #include <GLFW/glfw3.h>
 //src
-#include "../env.h"
-#include "../settings.h"
-#include "../functions.h"
-#include "../custom_colors.h"
+#include "../settings/env.h"
+#include "../settings/settings.h"
+#include "../lib/functions.h"
+#include "../lib/custom_colors.h"
 #include "gui.h"
 
 namespace Gui {
@@ -20,8 +20,8 @@ namespace Gui {
 
     }
     void AttackWindow::Render() {
-        ImGui::SetNextWindowPos(pos, ImGuiCond_FirstUseEver);
-        ImGui::SetNextWindowSize(size, ImGuiCond_FirstUseEver);
+        ImGui::SetNextWindowPos(pos, ImGuiCond_Always);
+        ImGui::SetNextWindowSize(size, ImGuiCond_Always);
         ImGui::Begin("Attack", &bool_attack_window, flags_attack_window);
 
         static std::vector<std::string> errors;
