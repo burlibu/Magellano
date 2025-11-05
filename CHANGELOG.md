@@ -57,3 +57,5 @@
 - Sistemato il Makefile
 - Sistemato bug di non-resize delle finestre. Bisognava settare imguiCond_Always
 - Non Testata profondamente
+- Implementato colore frame rosso -> TODO creare sistema di temi personalizzati
+- TODO risolvere bug che quando clicchi su save settings porta a 1920x1080 anche quando non lo hai selezionato

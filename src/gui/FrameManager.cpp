@@ -38,10 +38,7 @@ namespace Gui {
   }
   
   
-  /**
-   * Renderizza la finestra
-   * `fwbc` : [frame_window_background_color]: color of the background
-   */
+  
   Error FrameWindowManager::RenderFrame(const ImVec4& fwbc) {
     ImGui::Render();
     int display_w, display_h;

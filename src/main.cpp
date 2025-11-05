@@ -235,7 +235,7 @@ element_id = 0;
 
 
 
-frame_window_manager.RenderFrame(blu); // Rendering frame principale
+frame_window_manager.RenderFrame(color_theme); // Rendering frame principale
 } // fine while principale
 
 // Cleanup

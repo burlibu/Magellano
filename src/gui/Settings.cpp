@@ -23,7 +23,7 @@ namespace Gui {
     void SettingsWindow::SaveSettings() {
         // Here you would implement saving settings to a file or database
         ApplyDisplaySettings();
-
+        set_color_theme(color_theme_set);
         showNotification("Settings", "Settings saved successfully!", 3000);
     }
 
@@ -89,8 +89,11 @@ namespace Gui {
         glfwSetWindowMonitor(window_ptr, nullptr, xpos, ypos, window_width, window_height, 0);
     }
     
+    
+
     // Applica V-Sync
     glfwSwapInterval(vsync ? 1 : 0);
+
 }
 
     void SettingsWindow::Render() {
@@ -121,6 +124,9 @@ namespace Gui {
                     ImGui::Text("Appearance");
                     ImGui::Separator();
                     ImGui::Checkbox("Dark Theme", &dark_theme);
+                    ImGui::Text("Color Theme");
+                    if (ImGui::RadioButton("Default", color_theme_set==ColorTheme::Blu)) color_theme_set=ColorTheme::Blu;
+                    if (ImGui::RadioButton("Red",     color_theme_set==ColorTheme::Rosso)) color_theme_set=ColorTheme::Rosso;
                     ImGui::SliderFloat("UI Scale", &global_scale, 0.5f, 2.0f, "%.1f");
                     ImGui::Combo("Language", &language_index, languages, IM_ARRAYSIZE(languages));
                     

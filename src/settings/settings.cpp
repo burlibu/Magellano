@@ -35,7 +35,7 @@ bool bool_settings                      = true;
 bool bool_HelpWindow                    = true;
 
 ImGuiWindowFlags flags_minimize_and_exit_window =
-    ImGuiWindowFlags_NoTitleBar 
+      ImGuiWindowFlags_NoTitleBar 
     | ImGuiWindowFlags_NoResize 
     | ImGuiWindowFlags_NoMove 
     | ImGuiWindowFlags_NoScrollbar
@@ -81,8 +81,8 @@ ImGuiWindowFlags flags_table =
     | ImGuiWindowFlags_NoMove 
     | ImGuiWindowFlags_NoBringToFrontOnFocus
     | ImGuiWindowFlags_NoFocusOnAppearing 
+    // ImGuiTableFlags_Borders | ImGuiTableFlags_RowBg | ImGuiTableFlags_Resizable | ImGuiTableFlags_Sortable
     ;
-// ImGuiTableFlags_Borders | ImGuiTableFlags_RowBg | ImGuiTableFlags_Resizable | ImGuiTableFlags_Sortable
 
 ImGuiWindowFlags flags_settings =  
       ImGuiWindowFlags_NoResize 
@@ -129,6 +129,8 @@ ImGuiWindowFlags flags_HelpWindow =
     | ImGuiWindowFlags_NoNav
     ;
     
+
+// ================================================== Settings Window =========================================================
 // Settings window arrays for dropdown menus
 const char* languages[] = { "English", "Italian", "Spanish", "French", "German" };
 const char* resolutions[] = { "1280x720", "1366x768", "1600x900", "1920x1080","2550x1400", "2560x1440", "3840x2160" };
@@ -138,12 +140,12 @@ const char* notification_positions[] = { "Top Right", "Top Left", "Bottom Right"
 
 
 
-// Impostazioni Window 1 
+//? ====================================================== Window 1 ================================================================================================ 
 float value1 =  0.1f;
 int value2 = 1;
 std::vector<const char*> items = {"item1", "item2", "item3"};
 int current = 0;
-//
+//^ =================================================== esperimenti_window ==========================================================================================
 bool esperimenti_window = false;
 float my_float = 0.0f;
 int my_int = 0;
@@ -155,3 +157,6 @@ const std::string _password_ = "password";
 int element_id = 0;
 
 bool encryption = false; // senza encryption funziona
+
+ColorTheme color_theme_set=ColorTheme::Blu;
+color color_theme = blu;

@@ -47,8 +47,11 @@ public:
      */
     int getCurrentWidth() const { return frame_window_width; }
     int getCurrentHeight() const { return frame_window_heigth; }
-    
-    Error RenderFrame(const ImVec4& clear_color);
+    /**
+   * Renderizza la finestra
+   * `fwbc` : [frame_window_background_color]: color of the background
+   */
+    Error RenderFrame(const ImVec4& fwbc);
     void CleanUp();
 
 private:

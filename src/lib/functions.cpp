@@ -461,8 +461,8 @@ std::pair<int, int> calculate_window_size(float scale_factor) {
     int window_height = static_cast<int>(monitor_height * scale_factor);
     
     // Assicurati che le dimensioni minime siano rispettate
-    window_width = std::max(window_width, 800);
-    window_height = std::max(window_height, 600);
+    window_width = (std::max)(window_width, 800);
+    window_height = (std::max)(window_height, 600);
     
     return std::make_pair(window_width, window_height);
 }
@@ -485,3 +485,12 @@ void update_imgui_layout(int window_width, int window_height) {
     
     db("Layout aggiornato per:", window_width, "x", window_height);
 }
+
+//TODO
+void set_color_theme(const ColorTheme& color){
+  if (color==ColorTheme::Blu) color_theme=blu;
+  if (color==ColorTheme::Rosso) color_theme=rosso;
+
+}
+
+

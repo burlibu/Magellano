@@ -400,4 +400,6 @@ void initialize_window_settings(float scale_factor = 0.8f);
  */
 void update_imgui_layout(int window_width, int window_height);
 
+void set_color_theme(const ColorTheme& color);
+
 

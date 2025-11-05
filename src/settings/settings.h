@@ -10,9 +10,10 @@
 #include <GLFW/glfw3.h>
 //src
 #include "env.h"
+#include "../lib/custom_colors.h"
 
 // frame che ospiterà le finestre
-// commento di prova
+
 extern int frame_window_width_setting;
 extern int frame_window_heigth_setting;
 extern std::string frame_window_title_setting;
@@ -72,3 +73,12 @@ extern const std::string _password_;
 extern int element_id;
 
 extern bool encryption;
+
+enum class ColorTheme : int {
+    Default = 0,
+    Rosso   = 1,
+    Blu     = 2
+};
+
+extern ColorTheme color_theme_set;
+extern color color_theme;
