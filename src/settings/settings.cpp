@@ -13,7 +13,7 @@
 // Frame_window
 GLFWwindow* frame_window = nullptr;
 int frame_window_width_setting = 1920; // Valore di default, verrà sovrascritto
-int frame_window_heigth_setting = 1080; // Valore di default, verrà sovrascritto
+int frame_window_height_setting = 1080; // Valore di default, verrà sovrascritto
 std::string frame_window_title_setting = "Magellano Project";
 GLFWmonitor *frame_window_monitor_setting;
 GLFWwindow *frame_window_share_setting;

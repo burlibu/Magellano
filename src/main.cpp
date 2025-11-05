@@ -28,7 +28,7 @@ initialize_window_settings(0.8f); // Usa 80% delle dimensioni del monitor
 // Crea la finestra
 Gui::FrameWindowManager frame_window_manager(
   frame_window_width_setting,
-  frame_window_heigth_setting,
+  frame_window_height_setting,
   frame_window_title_setting,
   frame_window_monitor_setting,
   frame_window_share_setting

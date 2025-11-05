@@ -15,7 +15,7 @@
 // frame che ospiterà le finestre
 
 extern int frame_window_width_setting;
-extern int frame_window_heigth_setting;
+extern int frame_window_height_setting;
 extern std::string frame_window_title_setting;
 extern GLFWmonitor *frame_window_monitor_setting;
 extern GLFWwindow *frame_window_share_setting;

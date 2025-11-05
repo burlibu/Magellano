@@ -48,7 +48,7 @@ namespace Gui {
     frame_window_width = display_w;
     frame_window_heigth = display_h;
     frame_window_width_setting = display_w;
-    frame_window_heigth_setting = display_h;
+    frame_window_height_setting = display_h;
     
     glViewport(0, 0, display_w, display_h);
     glClearColor(fwbc.x, fwbc.y, fwbc.z, fwbc.w);

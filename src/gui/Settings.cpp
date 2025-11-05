@@ -58,7 +58,8 @@ namespace Gui {
 
     void SettingsWindow::ApplyDisplaySettings() {
     // Ottieni le dimensioni dal dropdown delle risoluzioni
-    int width, height;
+    int width,height;
+    glfwGetFramebufferSize(window_ptr, &width, &height);
     switch(resolution_index) {
         case 0: width = 1280; height = 720; break;
         case 1: width = 1366; height = 768; break;
