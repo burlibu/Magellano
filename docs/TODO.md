@@ -4,3 +4,4 @@
 - implementare voci Network e Firewall Fatto
 - Eliminare il compiled alberus (inutile ormai)
 - Implementare colr_theme personalizzati
+- Fornire istruzioni

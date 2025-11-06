@@ -486,7 +486,6 @@ void update_imgui_layout(int window_width, int window_height) {
     db("Layout aggiornato per:", window_width, "x", window_height);
 }
 
-//TODO
 void set_color_theme(const ColorTheme& color){
   if (color==ColorTheme::Blu) color_theme=blu;
   if (color==ColorTheme::Rosso) color_theme=rosso;
