@@ -16,6 +16,7 @@
 
 extern int frame_window_width_setting;
 extern int frame_window_height_setting;
+extern std::pair<int, int> frame_window_size; // Valore di default, verrà sovrascritto //! TEMPORANEO
 extern std::string frame_window_title_setting;
 extern GLFWmonitor *frame_window_monitor_setting;
 extern GLFWwindow *frame_window_share_setting;
@@ -53,7 +54,7 @@ extern bool bool_HelpWindow;
 
 // Settings window arrays for dropdown menus
 extern const char* languages[5];
-extern const char* resolutions[7];
+extern const char* resolutions[8];
 extern const char* antialiasing_options[5];
 extern const char* notification_positions[4];
 

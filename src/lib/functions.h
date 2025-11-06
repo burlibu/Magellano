@@ -399,7 +399,16 @@ void initialize_window_settings(float scale_factor = 0.8f);
  * @param window_height current window height
  */
 void update_imgui_layout(int window_width, int window_height);
-
+/**
+ * @brief Set the color theme object
+ * 
+ * @param color 
+ */
 void set_color_theme(const ColorTheme& color);
+/**
+ * @brief Main function to update frame size on window resize
+ * 
+ */
+void updateFrameSize(GLFWwindow* window, int width, int height);
 
 

@@ -61,32 +61,33 @@ namespace Gui {
     int width,height;
     glfwGetFramebufferSize(window_ptr, &width, &height);
     switch(resolution_index) {
-        case 0: width = 1280; height = 720; break;
-        case 1: width = 1366; height = 768; break;
-        case 2: width = 1600; height = 900; break;
-        case 3: width = 1920; height = 1080; break;
-        case 4: width = 2550; height = 1400; break;
-        case 5: width = 2560; height = 1440; break;
-        case 6: width = 3840; height = 2160; break;
-        default: width = 1920; height = 1080; break;
+        case 0: fullscreen=true; break;
+        case 1: frame_window_size = std::make_pair(1280, 720); fullscreen=false; break;
+        case 2: frame_window_size = std::make_pair(1366, 768); fullscreen=false; break;
+        case 3: frame_window_size = std::make_pair(1600, 900); fullscreen=false; break;
+        case 4: frame_window_size = std::make_pair(1920, 1080); fullscreen=false; break;
+        case 5: frame_window_size = std::make_pair(2550, 1400); fullscreen=false; break;
+        case 6: frame_window_size = std::make_pair(2560, 1440); fullscreen=false; break;
+        case 7: frame_window_size = std::make_pair(3840, 2160); fullscreen=false; break;
+        default: frame_window_size = std::make_pair(1920, 1080); fullscreen=false; break;
     }
     
     if (fullscreen) {
         // Modalità fullscreen
-        GLFWmonitor* monitor = glfwGetPrimaryMonitor();
+        GLFWmonitor* monitor = glfwGetPrimaryMonitor(); //TODO modificare in modo che se sono su un altro schermo resta li
         const GLFWvidmode* mode = glfwGetVideoMode(monitor);
         glfwSetWindowMonitor(window_ptr, monitor, 0, 0, mode->width, mode->height, mode->refreshRate);
     } else {
         // Modalità finestra - sottrai spazio per bordi e barra applicazioni
-        int window_width = width;
-        int window_height = height - 60; // Sottrai spazio per barra applicazioni
-        
+        int window_width = frame_window_size.first;
+        int window_height = frame_window_size.second - 60; // Sottrai spazio per barra applicazioni
+
         // Centra la finestra
-        GLFWmonitor* monitor = glfwGetPrimaryMonitor();
+        GLFWmonitor* monitor = glfwGetPrimaryMonitor(); //TODO modificare in modo che se sono su un altro schermo resta li
         const GLFWvidmode* mode = glfwGetVideoMode(monitor);
-        int xpos = (mode->width - window_width) / 2;
-        int ypos = (mode->height - window_height) / 2;
-        
+        int xpos = (mode->width - window_width) / 2 - 5; // Centra orizzontalmente valore da non toccare
+        int ypos = (mode->height - window_height) / 2 - 47; // Centra verticalmente e aggiungi offset per barra applicazioni valore da non toccare
+
         glfwSetWindowMonitor(window_ptr, nullptr, xpos, ypos, window_width, window_height, 0);
     }
     
@@ -145,8 +146,8 @@ namespace Gui {
                     ImGui::Text("Screen Settings");
                     ImGui::Separator();
                     ImGui::Checkbox("V-Sync", &vsync);
-                    ImGui::Checkbox("Fullscreen", &fullscreen);
-                    ImGui::Combo("Resolution", &resolution_index, resolutions, IM_ARRAYSIZE(resolutions));
+                    ImGui::Text("Resolution");
+                    ImGui::Combo("", &resolution_index, resolutions, IM_ARRAYSIZE(resolutions));
                     
                     ImGui::Spacing();
                     ImGui::Spacing();

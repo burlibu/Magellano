@@ -12,6 +12,7 @@
 
 // Frame_window
 GLFWwindow* frame_window = nullptr;
+std::pair<int, int> frame_window_size = {1920, 1080}; // Valore di default, verrà sovrascritto
 int frame_window_width_setting = 1920; // Valore di default, verrà sovrascritto
 int frame_window_height_setting = 1080; // Valore di default, verrà sovrascritto
 std::string frame_window_title_setting = "Magellano Project";
@@ -133,7 +134,7 @@ ImGuiWindowFlags flags_HelpWindow =
 // ================================================== Settings Window =========================================================
 // Settings window arrays for dropdown menus
 const char* languages[] = { "English", "Italian", "Spanish", "French", "German" };
-const char* resolutions[] = { "1280x720", "1366x768", "1600x900", "1920x1080","2550x1400", "2560x1440", "3840x2160" };
+const char* resolutions[] = { "Fullscreen","1280x720", "1366x768", "1600x900", "1920x1080","2550x1400", "2560x1440", "3840x2160" };
 const char* antialiasing_options[] = { "Off", "FXAA", "MSAA 2x", "MSAA 4x", "MSAA 8x" };
 const char* notification_positions[] = { "Top Right", "Top Left", "Bottom Right", "Bottom Left" };
 

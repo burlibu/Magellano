@@ -492,4 +492,8 @@ void set_color_theme(const ColorTheme& color){
 
 }
 
+void updateFrameSize(GLFWwindow* window, int width, int height) {
+    glfwSetWindowSize(window, width, height);
+    frame_window_size = std::make_pair(width, height);
+}
 

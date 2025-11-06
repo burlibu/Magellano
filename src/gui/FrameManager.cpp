@@ -28,7 +28,7 @@ namespace Gui {
   }
   
   Error FrameWindowManager::Create() {
-    frame_window = glfwCreateWindow(frame_window_width, frame_window_heigth, title.c_str(), monitor, share);
+    frame_window = glfwCreateWindow(frame_window_size.first, frame_window_size.second, title.c_str(), monitor, share);
     if (!frame_window) return Error::FAIL;
     return Error::OK;
   }
@@ -36,8 +36,6 @@ namespace Gui {
   GLFWwindow* FrameWindowManager::getWindow() const {
     return frame_window;
   }
-  
-  
   
   Error FrameWindowManager::RenderFrame(const ImVec4& fwbc) {
     ImGui::Render();
