@@ -222,6 +222,13 @@ class AttackWindow : public Window {
 public:
     AttackWindow(ImVec2 p, ImVec2 s, GLFWwindow* win, ImGuiWindowFlags f); // costruttore
     void Render() override;
+    void startScan(const std::string& ip, int port);
+    void RenderScanUI();
+private:
+    std::atomic<bool> scan_in_progress = false;
+    std::atomic<float> scan_progress = 0.0f;
+    std::vector<std::string> scan_results;
+
 };
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 class Window1 : public Window {
@@ -232,9 +239,9 @@ public:
 
 class MenuBar : public Window {
 public: 
-    MenuBar(ImVec2 p, ImVec2 s, GLFWwindow* win, ImGuiWindowFlags f);
+    MenuBar(ImVec2 p, ImVec2 s, GLFWwindow* win, ImGuiWindowFlags f); // A quanto pare menubar ignora pos e size e si posiziona il alto a sinistra della finestra madre. Sempre
     /**
-     * A quanto pare menubar ignora pos e size e si posiziona il alto a sinistra della finestra madre. Sempre
+     * Render della menubar
      */
     void Render() override;
     bool checked;

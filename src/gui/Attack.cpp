@@ -19,13 +19,48 @@ namespace Gui {
     : Window("Attack Window", p, s, win, f) {
 
     }
-    void AttackWindow::Render() {
-        ImGui::SetNextWindowPos(pos, ImGuiCond_Always);
-        ImGui::SetNextWindowSize(size, ImGuiCond_Always);
-        ImGui::Begin("Attack", &bool_attack_window, flags_attack_window);
+    void AttackWindow::StartScan(const std::string& ip, int port) {
+    scan_in_progress = true;
+    scan_progress = 0.0f;
+    scan_results.clear();
+
+    std::thread([ip, port]() {
+        try {
+            while (scan_progress < 1.0f) {
+                std::this_thread::sleep_for(std::chrono::milliseconds(50)); // Simula il tempo di scansione
+                scan_progress += 0.01f;
+            }
+            // Simula risultati dello scan
+            scan_results.push_back("Port " + std::to_string(port) + " is open.");
+            scan_results.push_back("No vulnerabilities found.");
+        } catch (const std::exception& e) {
+            scan_results.push_back(std::string("Error: ") + e.what());
+        }
+        scan_in_progress = false;
+    }).detach();
+}
+
+void AttackWindow::RenderScanUI() {
+    if (scan_in_progress) {
+        ImGui::Text("Scanning...");
+        ImGui::ProgressBar(scan_progress, ImVec2(0.0f, 0.0f));
+    } else if (!scan_results.empty()) {
+        ImGui::Text("Scan completed!");
+        for (const auto& result : scan_results) {
+            ImGui::Text("%s", result.c_str());
+        }
+    } else {
+        ImGui::Text("Ready to scan.");
+    }
+}
+
+void AttackWindow::Render() {
+    ImGui::SetNextWindowPos(pos, ImGuiCond_Always);
+    ImGui::SetNextWindowSize(size, ImGuiCond_Always);
+    ImGui::Begin("Attack", &bool_attack_window, flags_attack_window);
 
         static std::vector<std::string> errors;
-
+        ImGui::Text("Scan Target:");
         // Input text
         ImGui::SetNextItemWidth(150); // Imposta la larghezza desiderata in pixel
         static char ip[32] = "";
@@ -45,6 +80,24 @@ namespace Gui {
             db("[Port ERROR: ", port, "port_str: ", port_str, " ]");
 
         }
+        float scan_progress = 0.0f;
+        /// TODO creare barra di progresso per lo scanning
+        if(ImGui::Button("Start Scan")) {
+            // Avvia lo scan
+            errors.clear(); // Pulisce gli errori precedenti
+            // scan_target(std::string(ip), port, scan_results, err);
+            while (scan_progress < 1.0f) {
+                scan_progress += 0.01f; // Simula il progresso
+                std::this_thread::sleep_for(std::chrono::milliseconds(50)); // Simula il tempo di scansione
+                ImGui::ProgressBar(scan_progress, ImVec2(0.0f, 0.0f), "Scanning...");
+            }
+        }
+        ImGui::Separator();
+        ImGui::Text("Scan completed!");
+        // TODO mostra risultati scansione con informazioni dispositivo e vulnerabilità trovate
+        ImGui::Separator();
+        ImGui::Text("Launch Attack:");
+
 
         // Checkbox
         static bool claymore_op = false;
@@ -54,7 +107,7 @@ namespace Gui {
         ImGui::Checkbox("Spread to nearby devices", &spread_op);
 
         static bool network_spread_op = false;
-        ImGui::Checkbox("Try to attach the malware to the connected Network", &network_spread_op);
+        ImGui::Checkbox("Infect Network", &network_spread_op);
 
         // Radio buttons
         static const char* attack_types[] = { "Ddos", "Reverse Shell", "Malware Injection" };
