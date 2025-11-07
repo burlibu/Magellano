@@ -222,12 +222,12 @@ class AttackWindow : public Window {
 public:
     AttackWindow(ImVec2 p, ImVec2 s, GLFWwindow* win, ImGuiWindowFlags f); // costruttore
     void Render() override;
-    void startScan(const std::string& ip, int port);
-    void RenderScanUI();
+    // void startScan(const std::string& ip, int port);
+    // void RenderScanUI();
 private:
-    std::atomic<bool> scan_in_progress = false;
-    std::atomic<float> scan_progress = 0.0f;
-    std::vector<std::string> scan_results;
+    // std::atomic<bool> scan_in_progress{false};
+    // std::atomic<float> scan_progress{0.0f};
+    // std::vector<std::string> scan_results;
 
 };
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

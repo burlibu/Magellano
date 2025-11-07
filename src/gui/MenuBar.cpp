@@ -22,14 +22,29 @@ namespace Gui {
     void MenuBar::Render() {
         if (ImGui::BeginMainMenuBar()) {
             if (ImGui::BeginMenu("File")) {
+                std::cout << "Rendering File Menu" << std::endl;
                 if(ImGui::MenuItem("New")) {
-
+                    std::cout << "New clicked" << std::endl;
                 }
                 if(ImGui::MenuItem("Open")) {
-                    
-                }
+                    std::cout << "Open clicked" << std::endl;
+                  }
+                if (ImGui::BeginMenu("Recent")) {
+                  std::cout << "Rendering Recent Menu" << std::endl;
+                  if(ImGui::MenuItem("Recent 1")) {
+                      std::cout << "Recent 1 clicked" << std::endl;
+                  }
+                  if(ImGui::MenuItem("Recent 2")) {
+                      std::cout << "Recent 2 clicked" << std::endl;
+                  }
+                  
+                  ImGui::EndMenu();
+                  }
                 if(ImGui::MenuItem("Save")) {
-                    
+                    std::cout << "Save clicked" << std::endl;
+                }
+                if(ImGui::MenuItem("Save as")) {
+                  std::cout << "Save clicked" << std::endl;
                 }
                 ImGui::EndMenu();
             }

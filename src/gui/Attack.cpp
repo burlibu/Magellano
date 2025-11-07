@@ -19,40 +19,40 @@ namespace Gui {
     : Window("Attack Window", p, s, win, f) {
 
     }
-    void AttackWindow::StartScan(const std::string& ip, int port) {
-    scan_in_progress = true;
-    scan_progress = 0.0f;
-    scan_results.clear();
+//     void AttackWindow::StartScan(const std::string& ip, int port) {
+//     scan_in_progress.store(true);  // Usa store() per impostare il valore
+//     scan_progress.store(0.0f);    // Usa store() per impostare il valore
+//     scan_results.clear();         // Pulisce i risultati dello scan
 
-    std::thread([ip, port]() {
-        try {
-            while (scan_progress < 1.0f) {
-                std::this_thread::sleep_for(std::chrono::milliseconds(50)); // Simula il tempo di scansione
-                scan_progress += 0.01f;
-            }
-            // Simula risultati dello scan
-            scan_results.push_back("Port " + std::to_string(port) + " is open.");
-            scan_results.push_back("No vulnerabilities found.");
-        } catch (const std::exception& e) {
-            scan_results.push_back(std::string("Error: ") + e.what());
-        }
-        scan_in_progress = false;
-    }).detach();
-}
+//     std::thread([ip, port]() {
+//         try {
+//             while (scan_progress < 1.0f) {
+//                 std::this_thread::sleep_for(std::chrono::milliseconds(50)); // Simula il tempo di scansione
+//                 scan_progress += 0.01f;
+//             }
+//             // Simula risultati dello scan
+//             scan_results.push_back("Port " + std::to_string(port) + " is open.");
+//             scan_results.push_back("No vulnerabilities found.");
+//         } catch (const std::exception& e) {
+//             scan_results.push_back(std::string("Error: ") + e.what());
+//         }
+//         scan_in_progress = false;
+//     }).detach();
+// }
 
-void AttackWindow::RenderScanUI() {
-    if (scan_in_progress) {
-        ImGui::Text("Scanning...");
-        ImGui::ProgressBar(scan_progress, ImVec2(0.0f, 0.0f));
-    } else if (!scan_results.empty()) {
-        ImGui::Text("Scan completed!");
-        for (const auto& result : scan_results) {
-            ImGui::Text("%s", result.c_str());
-        }
-    } else {
-        ImGui::Text("Ready to scan.");
-    }
-}
+// void AttackWindow::RenderScanUI() {
+//     if (scan_in_progress) {
+//         ImGui::Text("Scanning...");
+//         ImGui::ProgressBar(scan_progress, ImVec2(0.0f, 0.0f));
+//     } else if (!scan_results.empty()) {
+//         ImGui::Text("Scan completed!");
+//         for (const auto& result : scan_results) {
+//             ImGui::Text("%s", result.c_str());
+//         }
+//     } else {
+//         ImGui::Text("Ready to scan.");
+//     }
+// }
 
 void AttackWindow::Render() {
     ImGui::SetNextWindowPos(pos, ImGuiCond_Always);

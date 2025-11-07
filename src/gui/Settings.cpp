@@ -147,7 +147,7 @@ namespace Gui {
                     ImGui::Separator();
                     ImGui::Checkbox("V-Sync", &vsync);
                     ImGui::Text("Resolution");
-                    ImGui::Combo("", &resolution_index, resolutions, IM_ARRAYSIZE(resolutions));
+                    ImGui::Combo("##unique_id", &resolution_index, resolutions, IM_ARRAYSIZE(resolutions));
                     
                     ImGui::Spacing();
                     ImGui::Spacing();
