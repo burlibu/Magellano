@@ -273,5 +273,11 @@ public:
     void Render() override;
 };
 
+class NetworkWindow : public Window {
+public:
+    NetworkWindow(const std::string& title, ImVec2 pos, ImVec2 size, GLFWwindow* win, ImGuiWindowFlags f);
+    void Render() override;
+};
+
 
 ;} // fine namespace Gui

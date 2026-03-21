@@ -23,8 +23,8 @@ namespace Gui {
     : Window(title, pos, size, win, f) {}
 
     void Table::Render() {
-        ImGui::SetNextWindowPos(pos, ImGuiCond_FirstUseEver);
-        ImGui::SetNextWindowSize(size, ImGuiCond_FirstUseEver);
+        ImGui::SetNextWindowPos(pos, ImGuiCond_Always);
+        ImGui::SetNextWindowSize(size, ImGuiCond_Always);
         ImGui::Begin(title.c_str(), nullptr, flags_table);
 
         // Lettura degli attacchi dal file attacks.json
@@ -32,7 +32,11 @@ namespace Gui {
         std::ifstream infile(attacks_file_path);
         if (infile.is_open()) {
             json attacks_json;
-            infile >> attacks_json;
+            try {
+                infile >> attacks_json;
+            } catch (const std::exception&) {
+                attacks_json = json::array();
+            }
             infile.close();
             if (attacks_json.is_array()) {
                 for (auto& attack : attacks_json) {
@@ -41,16 +45,25 @@ namespace Gui {
             }
         }
 
-        if (ImGui::BeginTable("Attacks history", 9, flags_table)) {
-            ImGui::TableSetupColumn("ID", ImGuiTableColumnFlags_DefaultSort);
-            ImGui::TableSetupColumn("IP");
-            ImGui::TableSetupColumn("Port");
-            ImGui::TableSetupColumn("Type");
-            ImGui::TableSetupColumn("Claymore");
-            ImGui::TableSetupColumn("Spread");
-            ImGui::TableSetupColumn("Network Spread");
-            ImGui::TableSetupColumn("Timestamp");
-            ImGui::TableSetupColumn("Result");
+        const ImGuiTableFlags attack_log_table_flags =
+            ImGuiTableFlags_Borders
+            | ImGuiTableFlags_RowBg
+            | ImGuiTableFlags_Resizable
+            | ImGuiTableFlags_ScrollX
+            | ImGuiTableFlags_ScrollY
+            | ImGuiTableFlags_SizingFixedFit;
+
+        if (ImGui::BeginTable("Attacks history", 9, attack_log_table_flags)) {
+            ImGui::TableSetupColumn("ID", ImGuiTableColumnFlags_DefaultSort | ImGuiTableColumnFlags_WidthFixed, 50.0f);
+            ImGui::TableSetupColumn("IP", ImGuiTableColumnFlags_WidthFixed, 130.0f);
+            ImGui::TableSetupColumn("Port", ImGuiTableColumnFlags_WidthFixed, 65.0f);
+            ImGui::TableSetupColumn("Type", ImGuiTableColumnFlags_WidthFixed, 100.0f);
+            ImGui::TableSetupColumn("Claymore", ImGuiTableColumnFlags_WidthFixed, 90.0f);
+            ImGui::TableSetupColumn("Spread", ImGuiTableColumnFlags_WidthFixed, 80.0f);
+            ImGui::TableSetupColumn("Network Spread", ImGuiTableColumnFlags_WidthFixed, 125.0f);
+            ImGui::TableSetupColumn("Timestamp", ImGuiTableColumnFlags_WidthFixed, 170.0f);
+            ImGui::TableSetupColumn("Result", ImGuiTableColumnFlags_WidthFixed, 80.0f);
+            ImGui::TableSetupScrollFreeze(0, 1);
             ImGui::TableHeadersRow();
 
             for (size_t row = 0; row < attacks.size(); ++row) {
@@ -68,7 +81,7 @@ namespace Gui {
                         std::string timestamp = attacks[row].contains("timestamp") && !attacks[row]["timestamp"].is_null() ? attacks[row]["timestamp"].get<std::string>() : "0";
                         ImGui::TableSetColumnIndex(4); ImGui::Text("%s", claymore ? "True" : "False");
                         ImGui::TableSetColumnIndex(5); ImGui::Text("%s", spread ? "True" : "False");
-                        ImGui::TableSetColumnIndex(6); ImGui::Text("%s", network_spread ? "     True" : "     False");
+                        ImGui::TableSetColumnIndex(6); ImGui::Text("%s", network_spread ? "True" : "False");
                         ImGui::TableSetColumnIndex(7); ImGui::Text("%s", timestamp.c_str());
                         ImGui::TableSetColumnIndex(8);
                         if (success) {

@@ -33,6 +33,7 @@ extern ImGuiWindowFlags flags_settings;
 extern ImGuiWindowFlags flags_BottomBar;
 extern ImGuiWindowFlags flags_rectangle;
 extern ImGuiWindowFlags flags_HelpWindow;
+extern ImGuiWindowFlags flags_network;
 
 
 // Bools
@@ -49,6 +50,7 @@ extern bool bool_table;
 extern bool bool_settings;
 extern bool bool_BottomBar;
 extern bool bool_HelpWindow;
+extern bool bool_network;
 
 // Settings window arrays for dropdown menus
 extern const char* languages[5];
@@ -68,5 +70,7 @@ extern int my_int;
 
 extern const std::string username;
 extern const std::string password;
+
+void setAuthenticatedWindows(bool enabled);
 
 extern int element_id;

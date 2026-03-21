@@ -2,6 +2,7 @@
 #include <iostream>
 #include <thread>
 #include <vector>
+#include <cstdlib>
 //imgui
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
@@ -12,11 +13,11 @@
 
 // Frame_window
 GLFWwindow* frame_window = nullptr;
-int frame_window_width_setting = 2550;
-int frame_window_heigth_setting = 1400;
+int frame_window_width_setting = 1920;
+int frame_window_heigth_setting = 1080;
 std::string frame_window_title_setting = "Alberus Project";
-GLFWmonitor *frame_window_monitor_setting;
-GLFWwindow *frame_window_share_setting;
+GLFWmonitor *frame_window_monitor_setting = nullptr;
+GLFWwindow *frame_window_share_setting = nullptr;
 
 bool bool_minimize_and_exit_window      = false;
 bool bool_demo_window                   = false;
@@ -31,6 +32,7 @@ bool bool_table                         = true;
 bool bool_settings                      = false;
 bool bool_BottomBar                     = true;
 bool bool_HelpWindow                    = false;
+bool bool_network                       = false;
 
 ImGuiWindowFlags flags_minimize_and_exit_window =
     ImGuiWindowFlags_NoTitleBar 
@@ -126,6 +128,12 @@ ImGuiWindowFlags flags_HelpWindow =
     | ImGuiWindowFlags_NoFocusOnAppearing 
     | ImGuiWindowFlags_NoNav
     ;
+
+ImGuiWindowFlags flags_network =
+            ImGuiWindowFlags_NoResize
+        | ImGuiWindowFlags_NoCollapse
+        | ImGuiWindowFlags_NoSavedSettings
+        ;
     
 // Settings window arrays for dropdown menus
 const char* languages[] = { "English", "Italian", "Spanish", "French", "German" };
@@ -149,5 +157,13 @@ int my_int = 0;
 
 const std::string username = "admin";
 const std::string password = "password";
+
+void setAuthenticatedWindows(bool enabled) {
+    bool_my_window = enabled;
+    bool_window1 = enabled;
+    bool_demo_window = enabled;
+    bool_attack_window = enabled;
+    bool_network = enabled;
+}
 
 int element_id = 0;

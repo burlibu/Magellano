@@ -47,7 +47,7 @@ namespace Gui {
         ImGui::PushStyleColor(ImGuiCol_ButtonHovered, rosso); // hover rosso
         ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1,1,1,1)); // testo bianco
         if (ImGui::Button("X")) {
-            exit(0);
+            glfwSetWindowShouldClose(window_ptr, GLFW_TRUE);
         }
         checkWindowSizeChange(size);
         ImGui::PopStyleColor(2);

@@ -8,6 +8,11 @@
 #include <random>
 #include <regex>
 #include <ctime>
+#include <cerrno>
+#include <cstring>
+#include <stdexcept>
+#include <sys/stat.h>
+#include <sys/types.h>
 //imgui
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
@@ -45,9 +50,6 @@ void showNotification(const std::string& title, const std::string& text, int dur
 
 // funzione che crea una finestra di notifica sullo schermo
 void RenderNotifications() {
-    ImGui::SetWindowPos(ImVec2(ImGui::GetIO().DisplaySize.x-250, ImGui::GetIO().DisplaySize.y- 100), ImGuiCond_Always);
-    ImGui::SetNextWindowSize(ImVec2(240,80), ImGuiCond_Always);
-
     for (long unsigned int i = 0; i < notifications.size();) {
         Notification& notification = notifications[i];
         float elapsed = std::chrono::duration<float>(std::chrono::steady_clock::now() - notification.start_time).count();
@@ -56,10 +58,13 @@ void RenderNotifications() {
             notifications.erase(notifications.begin() + i);
         } 
         else {
-            ImGui::Begin("Notification", nullptr, ImGuiWindowFlags_NoDecoration |  ImGuiWindowFlags_AlwaysAutoResize);
-            ImGui::TextWrapped("%s",notification.text.c_str()); // MEMO3
+            ImGui::SetNextWindowPos(ImVec2(ImGui::GetIO().DisplaySize.x - 280.0f, ImGui::GetIO().DisplaySize.y - 110.0f - (90.0f * i)), ImGuiCond_Always);
+            ImGui::SetNextWindowSize(ImVec2(260, 80), ImGuiCond_Always);
+            std::string window_id = "Notification##" + std::to_string(i);
+            ImGui::Begin(window_id.c_str(), nullptr, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoMove);
+            ImGui::TextUnformatted(notification.title.c_str());
             ImGui::Separator();
-            ImGui::TextWrapped("%s", notification.text.c_str()); //MEMO5
+            ImGui::TextWrapped("%s", notification.text.c_str());
             ImGui::End();
             i++;
         }
@@ -154,9 +159,9 @@ namespace Math {
     }
 }
 std::string ImVec2_to_string(const ImVec2& vector ) {
-    std::string out = "";
-    out += vector.x;
-    return out;
+    std::ostringstream out;
+    out << "(" << vector.x << ", " << vector.y << ")";
+    return out.str();
 }
 
 bool checkWindowSizeChange(const ImVec2& currentSize, float checkIntervalSeconds) {
@@ -218,13 +223,13 @@ void attack(const std::string& target_ip, const int& port, const std::string& at
     for (int i = 0; i < 8; ++i) err[i] = 0;
     if (checkIp(target_ip) == Error::FAIL) {
         err[0] = 1; // Errore IP
-        throw std::string("Invalid IP address format");
+        throw std::runtime_error("Invalid IP address format");
     }
 
     // Esempio: errore porta
     if (port < 1 || port > 65535) {
         err[1] = 1; // Errore porta
-        throw std::string("Invalid port number");
+        throw std::runtime_error("Invalid port number");
     }
 
     // Simula successo/fallimento
@@ -251,11 +256,20 @@ void save_attack_json(const std::string& ip, const int& port, const std::string&
         {"timestamp", timestamp}    // Timestamp dell'attacco
     };
 
+    // Crea la directory data se non esiste ancora.
+    if (mkdir("data", 0755) != 0 && errno != EEXIST) {
+        throw std::runtime_error("Cannot create data directory: " + std::string(std::strerror(errno)));
+    }
+
     // Prova ad aprire il file attacks.json per leggere eventuali attacchi già salvati
     std::ifstream infile(attacks_file_path);
     json attacks;
     if (infile.is_open()) {
-        infile >> attacks;      // Carica il contenuto del file nel json attacks
+        try {
+            infile >> attacks;      // Carica il contenuto del file nel json attacks
+        } catch (const std::exception&) {
+            attacks = json::array();
+        }
         infile.close();         // Chiudi il file
     }
     // Se il file non contiene un array, inizializza un array vuoto
@@ -266,6 +280,9 @@ void save_attack_json(const std::string& ip, const int& port, const std::string&
 
     // Scrivi l'array aggiornato nel file attacks.json, con indentazione 4 spazi
     std::ofstream outfile(attacks_file_path);
+    if (!outfile.is_open()) {
+        throw std::runtime_error("Cannot open attacks log file for writing");
+    }
     outfile << attacks.dump(4);
     outfile.close();            // Chiudi il file
 }

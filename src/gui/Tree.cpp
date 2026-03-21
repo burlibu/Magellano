@@ -19,8 +19,8 @@ namespace Gui {
     : Window(title, pos, size, win, f) {}
 
     void Tree::Render() {
-        ImGui::SetNextWindowPos(pos, ImGuiCond_FirstUseEver);
-        ImGui::SetNextWindowSize(size, ImGuiCond_FirstUseEver);
+        ImGui::SetNextWindowPos(pos, ImGuiCond_Always);
+        ImGui::SetNextWindowSize(size, ImGuiCond_Always);
         ImGui::Begin(title.c_str(), nullptr, flags_tree);
         if (ImGui::TreeNode("Nodo Principale")) {
             ImGui::Text("Contenuto del nodo");

@@ -47,3 +47,15 @@
 - Aggiunti errori per ip e port
 - Fixed Help tab
 - Cambiato nome del progetto in Magellano
+
+## Version 0.0.6
+
+## 21/03/2026
+
+- Aggiunta la gestione della rete con la visualizzazione delle interfacce di rete e delle connessioni attive
+- BUG: attack log box: non si inqueadra chiaramente e le scritte escono fuori
+- Ora le notifiche vengono renderizzate correttamente nel loop principale
+- Aggiunta la gestione della persistenza dei dati con file json
+- Molte impostazioni sono ancora placeholder e non funzionano
+- Risoluzione di default: 1920x1080 per evitare problemi di posizionamento finestre
+- centralizzazione gestione finestre autenticate, resa robusta la persistenza JSON, notifiche correttamente renderizzate nel loop principale.

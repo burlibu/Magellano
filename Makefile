@@ -7,7 +7,8 @@ INCLUDES = -Iinclude -Iexternal/imgui -Iexternal/imgui/backends -Iassets -Iexter
 PROJECT_SOURCES = src/main.cpp src/custom_colors.cpp src/env.cpp src/settings.cpp src/functions.cpp \
      src/gui/Attack.cpp src/gui/BottomBar.cpp src/gui/Demo.cpp src/gui/FrameManager.cpp \
     src/gui/Help.cpp src/gui/Login.cpp src/gui/MenuBar.cpp src/gui/MinimizeAndExit.cpp src/gui/Settings.cpp \
-    src/gui/ShowMyWindow.cpp src/gui/Table.cpp src/gui/TabWindow.cpp src/gui/Tree.cpp src/gui/Window1.cpp
+    src/gui/ShowMyWindow.cpp src/gui/Table.cpp src/gui/TabWindow.cpp src/gui/Tree.cpp src/gui/Window1.cpp \
+    src/gui/Network.cpp
 
 # File sorgente di Dear ImGui
 IMGUI_SOURCES = external/imgui/imgui.cpp \

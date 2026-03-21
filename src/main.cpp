@@ -46,10 +46,10 @@ ImGui_ImplOpenGL3_Init("#version 130");
 
 //calcolo width and height finestra in tempo reale
 int frame_width, frame_height;
-int menubar_height = 18;
 float bottombar_height = 35.0f;
 
 glfwGetFramebufferSize(frame_window_manager.getWindow(), &frame_width, &frame_height);
+int menubar_height = static_cast<int>(ImGui::GetFrameHeight());
 GLFWwindow* frame_p = frame_window_manager.getWindow(); // pointer to the frame
 
 // Istanziazione classi finestre
@@ -70,6 +70,7 @@ Gui::AttackWindow attack_window(ImVec2(frame_width/6,400+18), ImVec2((5*frame_wi
 Gui::BottomBar bottomBar("BottomBar", ImVec2(500,500), ImVec2(frame_width, 35.0f), frame_p, flags_BottomBar);
 Gui::HelpWindow helpWindow("Help", ImVec2(0,0 + menubar.GetPos().y), ImVec2(frame_window_manager.frame_window_width,frame_window_manager.frame_window_heigth - menubar.GetPos().y), frame_p, flags_HelpWindow);
 Gui::SettingsWindow settingsWindow(ImVec2(0,0 + menubar.GetPos().y), ImVec2(frame_window_manager.frame_window_width,frame_window_manager.frame_window_heigth - menubar.GetPos().y), frame_p, flags_settings);
+Gui::NetworkWindow networkWindow("Network Monitor", ImVec2(frame_width / 6, menubar_height), ImVec2(5 * frame_width / 6, frame_height - menubar_height - bottombar_height), frame_p, flags_network);
 
 
 
@@ -88,21 +89,32 @@ glfwPollEvents();
 ImGui_ImplOpenGL3_NewFrame();
 ImGui_ImplGlfw_NewFrame();
 ImGui::NewFrame();
+
+// Layout dinamico: ricalcola sempre in base alla risoluzione corrente.
+glfwGetFramebufferSize(frame_window_manager.getWindow(), &frame_width, &frame_height);
+menubar_height = static_cast<int>(ImGui::GetFrameHeight());
+
+tabWindow.SetPos(ImVec2(0, static_cast<float>(menubar_height)));
+tabWindow.SetSize(ImVec2(frame_width / 6.0f, frame_height - bottombar_height - menubar_height));
+
+tree.SetPos(ImVec2(frame_width / 6.0f, static_cast<float>(menubar_height)));
+tree.SetSize(ImVec2((2.0f * frame_width) / 6.0f, 400.0f));
+
+table.SetPos(ImVec2((3.0f * frame_width) / 6.0f, static_cast<float>(menubar_height)));
+table.SetSize(ImVec2((3.0f * frame_width) / 6.0f, 400.0f));
+
+attack_window.SetPos(ImVec2(frame_width / 6.0f, 400.0f + menubar_height));
+attack_window.SetSize(ImVec2((5.0f * frame_width) / 6.0f, frame_height - 400.0f - menubar_height - bottombar_height));
+
+networkWindow.SetPos(ImVec2(frame_width / 6.0f, static_cast<float>(menubar_height)));
+networkWindow.SetSize(ImVec2((5.0f * frame_width) / 6.0f, frame_height - menubar_height - bottombar_height));
+
+bottomBar.SetSize(ImVec2(static_cast<float>(frame_width), bottombar_height));
 //^ ///////////////////////////////////////////////////////// Login Window ///////////////////////////////////////////////////////////
 if (bool_login_window) {
     loginWin.Render();
     loginWin.isLogged(); // TODO da rendere più sicuro ed efficiente
-    if (!loginWin.logged){
-        bool_my_window = false;
-        bool_window1 = false;
-        bool_demo_window = false;
-        bool_attack_window = false;
-    } else {
-        bool_my_window = true;
-        bool_window1 = true;
-        bool_demo_window = true;
-        bool_attack_window = true;
-    }
+    setAuthenticatedWindows(loginWin.logged);
 }
 
 
@@ -160,10 +172,16 @@ if (bool_HelpWindow)
 {
 helpWindow.Render();
 }
+if (bool_network)
+{
+networkWindow.Render();
+}
 if (bool_BottomBar)
 {
 bottomBar.Render();
 }
+
+RenderNotifications();
 element_id = 0;
 
 // Rectangle(ImVec2(100,100), ImVec2(200,200), viola);

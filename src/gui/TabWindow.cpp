@@ -19,8 +19,8 @@ namespace Gui {
     : Window(title, pos, size, win, f) {}
 
     void TabWindow::Render(){
-        ImGui::SetNextWindowPos(pos, ImGuiCond_FirstUseEver);
-        ImGui::SetNextWindowSize(size, ImGuiCond_FirstUseEver);
+        ImGui::SetNextWindowPos(pos, ImGuiCond_Always);
+        ImGui::SetNextWindowSize(size, ImGuiCond_Always);
         if (ImGui::Begin(title.c_str(), nullptr, flags_tab_window)) {
             if (ImGui::BeginTabBar("MyTabBar", ImGuiTabBarFlags_Reorderable)) {
                 // Tab fisso (non chiudibile)

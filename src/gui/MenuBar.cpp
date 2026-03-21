@@ -57,6 +57,24 @@ namespace Gui {
             if (ImGui::MenuItem("Help")) {
                 bool_HelpWindow = !bool_HelpWindow;
             }
+            ImGui::SameLine();
+
+            bool network_style = false;
+            if (bool_network) {
+                ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1.0f, 1.0f, 1.0f, 1.0f));
+                ImGui::PushStyleColor(ImGuiCol_Header, ImVec4(0.0f, 0.4f, 0.8f, 1.0f));
+                ImGui::PushStyleColor(ImGuiCol_HeaderHovered, ImVec4(0.0f, 0.5f, 0.9f, 1.0f));
+                ImGui::PushStyleColor(ImGuiCol_HeaderActive, ImVec4(0.0f, 0.3f, 0.7f, 1.0f));
+                network_style = true;
+            }
+
+            if (ImGui::MenuItem("Network")) {
+                bool_network = !bool_network;
+            }
+
+            if (network_style) {
+                ImGui::PopStyleColor(4);
+            }
             ImGui::EndMainMenuBar();
         }
     };

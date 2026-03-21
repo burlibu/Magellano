@@ -80,6 +80,7 @@ void style();
  *  @ingroup notifications
  */
 void showNotification(const std::string& title, const std::string& text, int duration_ms); //MEMO6
+void RenderNotifications();
 /**
  * @brief Funzione che prende una stringa colore come bde0fe o bde0fe80 e ritorna un ImVec4 corrispettivo 
  * @param[in] n numero intero per calcolo fattoriale >= 0
