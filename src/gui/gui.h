@@ -15,6 +15,32 @@
 #include "../custom_colors.h"
 
 namespace Gui {
+
+// ============= HELPER STRUCTURES FOR TABWINDOW =============
+/**
+ * System statistics structure for TabWindow System Stats tab
+ */
+struct SystemStats {
+    float cpu_usage = 0.0f;
+    float ram_usage = 0.0f;
+    float disk_usage = 0.0f;
+    unsigned long uptime_seconds = 0;
+    unsigned long total_ram_mb = 0;
+    unsigned long used_ram_mb = 0;
+    unsigned long free_ram_mb = 0;
+};
+
+/**
+ * Process information structure for TabWindow Process Monitor tab
+ */
+struct ProcessInfo {
+    int pid = 0;
+    std::string name;
+    float cpu_percent = 0.0f;
+    unsigned long rss_mb = 0;
+    std::string state;
+};
+
 /**
  * Classe primaria
  * Frame
@@ -233,14 +259,14 @@ public:
 
 class TabWindow : public Window {
 private:
-    bool tab1_open = true;
-    bool tab2_open = true;
-    bool tab3_open = true;
+    // Helper render methods for system dashboard
+    void render_system_stats_tab(const SystemStats& stats);
+    void render_process_monitor_tab(const std::vector<ProcessInfo>& processes, int& selected);
+    void render_file_browser_tab(std::string& current_dir);
+    void render_info_tab();
 
 public: 
     TabWindow(const std::string& title, ImVec2 pos, ImVec2 size, GLFWwindow* win, ImGuiWindowFlags f);
-    
-
     void Render() override;
 };
 
