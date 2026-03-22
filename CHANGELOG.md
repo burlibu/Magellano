@@ -70,7 +70,7 @@
 
 ---
 
-## Version 0.2.0 - Cross-Platform (Currently in progress)
+## Version 0.1.1 - Cross-Platform (Currently in progress)
 
 ## 22/03/2026
 
@@ -127,3 +127,11 @@
 
 - Primera volta che si esegue su Windows richiede cicca 'Refresh' nel Changelog tab per download CHANGELOG.md
 - Path Unicode non ancora testati (legacy ANSI supportato)
+
+### non testato su windows, potrebbe avere problemi di path o dipendenze. Testare e correggere se necessario.
+
+# Version 0.1.2
+
+- Aggiornato network monitor per mostrare statistiche interfacce di rete in tempo reale
+- Aggiunta gestione errori per interfacce di rete non accessibili o senza permessi
+- Ottimizzato rendering del network monitor per ridurre lag su sistemi con molte
