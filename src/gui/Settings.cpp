@@ -63,10 +63,11 @@ namespace Gui {
         case 0: width = 1280; height = 720; break;
         case 1: width = 1366; height = 768; break;
         case 2: width = 1600; height = 900; break;
-        case 3: width = 1920; height = 1080; break;
-        case 4: width = 2550; height = 1400; break;
-        case 5: width = 2560; height = 1440; break;
-        case 6: width = 3840; height = 2160; break;
+        case 3: width = 1920; height = 968; break;
+        case 4: width = 1920; height = 1080; break;
+        case 5: width = 2550; height = 1400; break;
+        case 6: width = 2560; height = 1440; break;
+        case 7: width = 3840; height = 2160; break;
         default: width = 1920; height = 1080; break;
     }
     

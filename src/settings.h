@@ -1,8 +1,12 @@
+// In this file no funzions must be declared -> declare in functions.h
+
 #pragma once // serve a evitare che lo stesso header venga incluso più volte
 //standard
 #include <iostream>
 #include <thread>
 #include <vector>
+#include <array>
+#include <cstddef>
 //imgui
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
@@ -54,9 +58,25 @@ extern bool bool_HelpWindow;
 extern bool bool_network;
 extern bool bool_changelog;
 
+struct WindowToggleEntry {
+	const char* window_name;
+	bool* state;
+};
+
+struct TopPanelToggleEntry {
+	const char* window_name;
+	bool* state;
+	ImVec4 active_header_color;
+	ImVec4 hovered_header_color;
+	ImVec4 pressed_header_color;
+};
+
+extern const std::array<TopPanelToggleEntry, 4> top_panel_toggle_entries;
+extern const std::array<WindowToggleEntry, 6> authenticated_window_entries;
+
 // Settings window arrays for dropdown menus
 extern const char* languages[5];
-extern const char* resolutions[7];
+extern const char* resolutions[8];
 extern const char* antialiasing_options[5];
 extern const char* notification_positions[4];
 
@@ -72,7 +92,5 @@ extern int my_int;
 
 extern const std::string username;
 extern const std::string password;
-
-void setAuthenticatedWindows(bool enabled);
 
 extern int element_id;

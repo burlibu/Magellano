@@ -14,6 +14,9 @@
 #include "../custom_colors.h"
 #include "gui.h"
 
+using namespace std;
+using namespace ImGui;
+
 namespace Gui {
   MenuBar::MenuBar(ImVec2 p, ImVec2 s, GLFWwindow* win, ImGuiWindowFlags f)
     : Window("MenuBar", p, s, win, f), checked(false) {
@@ -23,75 +26,40 @@ namespace Gui {
         if (ImGui::BeginMainMenuBar()) {
             if (ImGui::BeginMenu("File")) {
                 if(ImGui::MenuItem("New")) {
-
+                    //TODO
                 }
                 if(ImGui::MenuItem("Open")) {
-                    
+                    //TODO
                 }
                 if(ImGui::MenuItem("Save")) {
-                    
+                    // TODO
                 }
                 ImGui::EndMenu();
             }
-            
-            // Cambia lo sfondo della voce Settings quando la finestra è aperta
-            bool pushed_styles = false;
-            if (bool_settings) {
-                ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1.0f, 1.0f, 1.0f, 1.0f));
-                ImGui::PushStyleColor(ImGuiCol_Header, ImVec4(0.0f, 0.8f, 0.0f, 1.0f));
-                ImGui::PushStyleColor(ImGuiCol_HeaderHovered, ImVec4(0.0f, 0.9f, 0.0f, 1.0f));
-                ImGui::PushStyleColor(ImGuiCol_HeaderActive, ImVec4(0.0f, 0.7f, 0.0f, 1.0f));
-                pushed_styles = true;
-            }
-            
-            if (ImGui::MenuItem("Settings")) {
-                // Alterna lo stato della finestra settings
-                bool_settings = !bool_settings;
-            }
-            
-            // Ripristina lo stile originale se era stato modificato
-            if (pushed_styles) {
-                ImGui::PopStyleColor(4); // Pop all 4 style colors that were pushed
-            }
-            ImGui::SameLine();
-            if (ImGui::MenuItem("Help")) {
-                bool_HelpWindow = !bool_HelpWindow;
-            }
-            ImGui::SameLine();
 
-            bool network_style = false;
-            if (bool_network) {
-                ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1.0f, 1.0f, 1.0f, 1.0f));
-                ImGui::PushStyleColor(ImGuiCol_Header, ImVec4(0.0f, 0.4f, 0.8f, 1.0f));
-                ImGui::PushStyleColor(ImGuiCol_HeaderHovered, ImVec4(0.0f, 0.5f, 0.9f, 1.0f));
-                ImGui::PushStyleColor(ImGuiCol_HeaderActive, ImVec4(0.0f, 0.3f, 0.7f, 1.0f));
-                network_style = true;
-            }
+            bool first_top_panel_item = true;
+            for (const TopPanelToggleEntry& entry : top_panel_toggle_entries) {
+                if (!first_top_panel_item) {
+                    ImGui::SameLine();
+                }
+                first_top_panel_item = false;
 
-            if (ImGui::MenuItem("Network")) {
-                bool_network = !bool_network;
-            }
+                bool pushed_styles = false;
+                if (entry.state != nullptr && *(entry.state)) {
+                    ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1.0f, 1.0f, 1.0f, 1.0f));
+                    ImGui::PushStyleColor(ImGuiCol_Header, entry.active_header_color);
+                    ImGui::PushStyleColor(ImGuiCol_HeaderHovered, entry.hovered_header_color);
+                    ImGui::PushStyleColor(ImGuiCol_HeaderActive, entry.pressed_header_color);
+                    pushed_styles = true;
+                }
 
-            if (network_style) {
-                ImGui::PopStyleColor(4);
-            }
-            ImGui::SameLine();
+                if (ImGui::MenuItem(entry.window_name)) {
+                    toggleExclusiveTopPanel(entry.state);
+                }
 
-            bool changelog_style = false;
-            if (bool_changelog) {
-                ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1.0f, 1.0f, 1.0f, 1.0f));
-                ImGui::PushStyleColor(ImGuiCol_Header, ImVec4(0.75f, 0.55f, 0.10f, 1.0f));
-                ImGui::PushStyleColor(ImGuiCol_HeaderHovered, ImVec4(0.85f, 0.65f, 0.15f, 1.0f));
-                ImGui::PushStyleColor(ImGuiCol_HeaderActive, ImVec4(0.65f, 0.45f, 0.05f, 1.0f));
-                changelog_style = true;
-            }
-
-            if (ImGui::MenuItem("Changelog")) {
-                bool_changelog = !bool_changelog;
-            }
-
-            if (changelog_style) {
-                ImGui::PopStyleColor(4);
+                if (pushed_styles) {
+                    ImGui::PopStyleColor(4);
+                }
             }
             ImGui::EndMainMenuBar();
         }

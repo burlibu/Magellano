@@ -1,3 +1,5 @@
+//In this file no functions are allowed -> create them in functions.cpp
+
 //standards
 #include <iostream>
 #include <thread>
@@ -34,6 +36,22 @@ bool bool_BottomBar                     = true;
 bool bool_HelpWindow                    = false;
 bool bool_network                       = false;
 bool bool_changelog                     = false;
+
+const std::array<TopPanelToggleEntry, 4> top_panel_toggle_entries = {{
+    {"Settings", &bool_settings, ImVec4(0.0f, 0.8f, 0.0f, 1.0f), ImVec4(0.0f, 0.9f, 0.0f, 1.0f), ImVec4(0.0f, 0.7f, 0.0f, 1.0f)},
+    {"Help", &bool_HelpWindow, ImVec4(0.35f, 0.35f, 0.35f, 1.0f), ImVec4(0.45f, 0.45f, 0.45f, 1.0f), ImVec4(0.25f, 0.25f, 0.25f, 1.0f)},
+    {"Network", &bool_network, ImVec4(0.0f, 0.4f, 0.8f, 1.0f), ImVec4(0.0f, 0.5f, 0.9f, 1.0f), ImVec4(0.0f, 0.3f, 0.7f, 1.0f)},
+    {"Changelog", &bool_changelog, ImVec4(0.75f, 0.55f, 0.10f, 1.0f), ImVec4(0.85f, 0.65f, 0.15f, 1.0f), ImVec4(0.65f, 0.45f, 0.05f, 1.0f)}
+}};
+
+const std::array<WindowToggleEntry, 6> authenticated_window_entries = {{
+    {"Main", &bool_my_window},
+    {"Window1", &bool_window1},
+    {"Demo", &bool_demo_window},
+    {"Attack", &bool_attack_window},
+    {"Network", &bool_network},
+    {"Changelog", &bool_changelog}
+}};
 
 ImGuiWindowFlags flags_minimize_and_exit_window =
     ImGuiWindowFlags_NoTitleBar 
@@ -145,7 +163,7 @@ ImGuiWindowFlags flags_changelog =
     
 // Settings window arrays for dropdown menus
 const char* languages[] = { "English", "Italian", "Spanish", "French", "German" };
-const char* resolutions[] = { "1280x720", "1366x768", "1600x900", "1920x1080","2550x1400", "2560x1440", "3840x2160" };
+const char* resolutions[] = { "1280x720", "1366x768", "1600x900", "1920x968", "1920x1080", "2550x1400", "2560x1440", "3840x2160" };
 const char* antialiasing_options[] = { "Off", "FXAA", "MSAA 2x", "MSAA 4x", "MSAA 8x" };
 const char* notification_positions[] = { "Top Right", "Top Left", "Bottom Right", "Bottom Left" };
 
@@ -165,14 +183,5 @@ int my_int = 0;
 
 const std::string username = "admin";
 const std::string password = "password";
-
-void setAuthenticatedWindows(bool enabled) {
-    bool_my_window = enabled;
-    bool_window1 = enabled;
-    bool_demo_window = enabled;
-    bool_attack_window = enabled;
-    bool_network = enabled;
-    bool_changelog = enabled;
-}
 
 int element_id = 0;

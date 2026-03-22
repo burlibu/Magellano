@@ -287,6 +287,29 @@ void save_attack_json(const std::string& ip, const int& port, const std::string&
     outfile.close();            // Chiudi il file
 }
 
+void setAuthenticatedWindows(bool enabled) {
+    for (const WindowToggleEntry& entry : authenticated_window_entries) {
+        bool* state = entry.state;
+        if (state != nullptr) {
+            *state = enabled;
+        }
+    }
+}
+
+void toggleExclusiveTopPanel(bool* targetPanel) {
+    if (!targetPanel) {
+        return;
+    }
+    const bool should_open = !(*targetPanel);
+    for (const TopPanelToggleEntry& entry : top_panel_toggle_entries) {
+        bool* state = entry.state;
+        if (state != nullptr) {
+            *state = false;
+        }
+    }
+    *targetPanel = should_open;
+}
+
 Error checkIp(const std::string& ip) {
   std::regex ip_regex(R"((\d{1,3}\.){3}\d{1,3})");
   if (!std::regex_match(ip, ip_regex)) {

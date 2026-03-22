@@ -268,6 +268,16 @@ void attack(const std::string& target_ip, const int& port, const std::string& at
 void save_attack_json(const std::string& ip, const int& port, const std::string& attack_type, bool claymore, bool spread, bool network_spread, bool success, std::string timestamp);
 
 /**
+ * Aggiorna in blocco le finestre che dipendono dallo stato di autenticazione.
+ */
+void setAuthenticatedWindows(bool enabled);
+
+/**
+ * Toggle mutuamente esclusivo tra pannelli della top bar.
+ */
+void toggleExclusiveTopPanel(bool* targetPanel);
+
+/**
  * @brief Controlla se un indirizzo IP è valido.
  *
  * @param ip L'indirizzo IP da controllare.

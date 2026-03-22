@@ -61,3 +61,9 @@
 - centralizzazione gestione finestre autenticate, resa robusta la persistenza JSON, notifiche correttamente renderizzate nel loop principale.
 - Monitoraggio realt-time risolzione
 - Tab Changelog
+
+## Version 0.1.0 - Stabile
+
+## 22/03/2026
+
+- Cambiata gestione bool windows in data registry per miglior efficienza e manutentabilità
