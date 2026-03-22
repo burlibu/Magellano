@@ -35,8 +35,15 @@ std::string trim_copy(const std::string& text) {
 }
 
 bool command_exists(const std::string& cmd) {
+#ifdef _WIN32
+    // Windows: use 'where' command to find executables in PATH
+    const std::string check = "where " + cmd + " >nul 2>&1";
+    return std::system(check.c_str()) == 0;
+#else
+    // Linux/Unix: use 'command -v' to check if command exists
     const std::string check = "command -v " + cmd + " >/dev/null 2>&1";
     return std::system(check.c_str()) == 0;
+#endif
 }
 
 bool run_command_capture(const std::string& command, std::string& output, int& exit_code) {
@@ -102,7 +109,19 @@ void fetch_changelog(ChangelogState& state) {
     state.source_url.clear();
 
     if (!command_exists("curl")) {
-        state.error = "curl is not available on this system. Install curl and retry.";
+#ifdef _WIN32
+        state.error = "curl is not available on this system.\n"
+                      "Please install curl:\n"
+                      "1. Install MSVC or use vcpkg: vcpkg install curl:x64-windows\n"
+                      "2. Or use Chocolatey: choco install curl\n"
+                      "3. Or download from: https://curl.se/windows/";
+#else
+        state.error = "curl is not available on this system.\n"
+                      "Please install curl using your package manager:\n"
+                      "Ubuntu/Debian: sudo apt-get install curl\n"
+                      "Fedora/RHEL: sudo dnf install curl\n"
+                      "macOS: brew install curl";
+#endif
         return;
     }
 

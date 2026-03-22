@@ -11,8 +11,7 @@
 #include <cerrno>
 #include <cstring>
 #include <stdexcept>
-#include <sys/stat.h>
-#include <sys/types.h>
+#include <filesystem>
 //imgui
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
@@ -257,8 +256,12 @@ void save_attack_json(const std::string& ip, const int& port, const std::string&
     };
 
     // Crea la directory data se non esiste ancora.
-    if (mkdir("data", 0755) != 0 && errno != EEXIST) {
-        throw std::runtime_error("Cannot create data directory: " + std::string(std::strerror(errno)));
+    // Cross-platform: std::filesystem works on both Windows and Linux
+    namespace fs = std::filesystem;
+    try {
+        fs::create_directories("data");
+    } catch (const fs::filesystem_error& e) {
+        throw std::runtime_error("Cannot create data directory: " + std::string(e.what()));
     }
 
     // Prova ad aprire il file attacks.json per leggere eventuali attacchi già salvati
