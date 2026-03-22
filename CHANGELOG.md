@@ -135,3 +135,7 @@
 - Aggiornato network monitor per mostrare statistiche interfacce di rete in tempo reale
 - Aggiunta gestione errori per interfacce di rete non accessibili o senza permessi
 - Ottimizzato rendering del network monitor per ridurre lag su sistemi con molte
+
+# Version 0.1.3
+
+- Aggiornata Tab window

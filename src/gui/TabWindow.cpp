@@ -10,6 +10,7 @@
 #include <algorithm>
 #include <filesystem>
 #include <sys/statvfs.h>
+#include <system_error>
 //imgui
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
@@ -303,7 +304,8 @@ void TabWindow::render_process_monitor_tab(const std::vector<ProcessInfo>& proce
 void TabWindow::render_file_browser_tab(std::string& current_dir) {
     ImGui::Text("File Browser");
     static char path_buffer[512] = {0};
-    strncpy(path_buffer, current_dir.c_str(), sizeof(path_buffer) - 1);
+    std::strncpy(path_buffer, current_dir.c_str(), sizeof(path_buffer) - 1);
+    path_buffer[sizeof(path_buffer) - 1] = '\0';
     ImGui::InputText("Current Path##filebrowser", path_buffer, sizeof(path_buffer), ImGuiInputTextFlags_ReadOnly);
     ImGui::SameLine();
     if (ImGui::Button("Refresh")) {
@@ -312,49 +314,66 @@ void TabWindow::render_file_browser_tab(std::string& current_dir) {
     
     ImGui::Separator();
     
-    try {
-        if (ImGui::Button("../")) {
-            fs::path p(current_dir);
-            if (p.has_parent_path()) {
-                current_dir = p.parent_path().string();
-            }
+    if (ImGui::Button("../")) {
+        fs::path p(current_dir);
+        if (p.has_parent_path()) {
+            current_dir = p.parent_path().string();
         }
-        
-        if (ImGui::BeginTable("file_browser", 3, ImGuiTableFlags_Borders | ImGuiTableFlags_RowBg | ImGuiTableFlags_Resizable | ImGuiTableFlags_ScrollY)) {
-            ImGui::TableSetupColumn("Name");
-            ImGui::TableSetupColumn("Type");
-            ImGui::TableSetupColumn("Size");
-            ImGui::TableHeadersRow();
-            
-            for (const auto& entry : fs::directory_iterator(current_dir)) {
-                ImGui::TableNextRow();
-                ImGui::TableSetColumnIndex(0);
-                
-                bool is_dir = fs::is_directory(entry);
-                if (is_dir) {
-                    ImGui::TextColored(ImVec4(0, 1, 1, 1), "[DIR] %s", entry.path().filename().string().c_str());
+    }
+
+    std::error_code ec;
+    if (!fs::exists(current_dir, ec) || !fs::is_directory(current_dir, ec)) {
+        ImGui::TextColored(rosso, "Invalid directory: %s", current_dir.c_str());
+        return;
+    }
+
+    if (ImGui::BeginTable("file_browser", 3, ImGuiTableFlags_Borders | ImGuiTableFlags_RowBg | ImGuiTableFlags_Resizable | ImGuiTableFlags_ScrollY)) {
+        ImGui::TableSetupColumn("Name");
+        ImGui::TableSetupColumn("Type");
+        ImGui::TableSetupColumn("Size");
+        ImGui::TableHeadersRow();
+
+        for (const auto& entry : fs::directory_iterator(current_dir, fs::directory_options::skip_permission_denied, ec)) {
+            if (ec) {
+                ec.clear();
+                continue;
+            }
+
+            ImGui::TableNextRow();
+            ImGui::TableSetColumnIndex(0);
+
+            const bool is_dir = entry.is_directory(ec);
+            if (ec) {
+                ec.clear();
+            }
+
+            const std::string name = entry.path().filename().string();
+            if (is_dir) {
+                ImGui::TextColored(ImVec4(0, 1, 1, 1), "[DIR] %s", name.c_str());
+            } else {
+                ImGui::Text("%s", name.c_str());
+            }
+
+            if (ImGui::IsItemClicked() && is_dir) {
+                current_dir = entry.path().string();
+            }
+
+            ImGui::TableSetColumnIndex(1);
+            ImGui::Text("%s", is_dir ? "Directory" : "File");
+
+            ImGui::TableSetColumnIndex(2);
+            if (!is_dir) {
+                const auto size = entry.file_size(ec);
+                if (!ec) {
+                    ImGui::Text("%llu KB", static_cast<unsigned long long>(size / 1024));
                 } else {
-                    ImGui::Text("%s", entry.path().filename().string().c_str());
+                    ImGui::Text("N/A");
+                    ec.clear();
                 }
-                
-                if (ImGui::IsItemClicked() && is_dir) {
-                    current_dir = entry.path().string();
-                }
-                
-                ImGui::TableSetColumnIndex(1);
-                ImGui::Text("%s", is_dir ? "Directory" : "File");
-                
-                ImGui::TableSetColumnIndex(2);
-                if (!is_dir) {
-                    unsigned long size = fs::file_size(entry) / 1024;  // KB
-                    ImGui::Text("%lu KB", size);
-                }
-            }
-            
-            ImGui::EndTable();
         }
-    } catch (const std::exception& e) {
-        ImGui::TextColored(rosso, "Error: %s", e.what());
+        }
+
+        ImGui::EndTable();
     }
 }
 
