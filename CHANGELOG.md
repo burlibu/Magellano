@@ -59,3 +59,5 @@
 - Molte impostazioni sono ancora placeholder e non funzionano
 - Risoluzione di default: 1920x1080 per evitare problemi di posizionamento finestre
 - centralizzazione gestione finestre autenticate, resa robusta la persistenza JSON, notifiche correttamente renderizzate nel loop principale.
+- Monitoraggio realt-time risolzione
+- Tab Changelog

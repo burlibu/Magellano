@@ -71,6 +71,7 @@ Gui::BottomBar bottomBar("BottomBar", ImVec2(500,500), ImVec2(frame_width, 35.0f
 Gui::HelpWindow helpWindow("Help", ImVec2(0,0 + menubar.GetPos().y), ImVec2(frame_window_manager.frame_window_width,frame_window_manager.frame_window_heigth - menubar.GetPos().y), frame_p, flags_HelpWindow);
 Gui::SettingsWindow settingsWindow(ImVec2(0,0 + menubar.GetPos().y), ImVec2(frame_window_manager.frame_window_width,frame_window_manager.frame_window_heigth - menubar.GetPos().y), frame_p, flags_settings);
 Gui::NetworkWindow networkWindow("Network Monitor", ImVec2(frame_width / 6, menubar_height), ImVec2(5 * frame_width / 6, frame_height - menubar_height - bottombar_height), frame_p, flags_network);
+Gui::ChangelogWindow changelogWindow("Changelog", ImVec2(0, static_cast<float>(menubar_height)), ImVec2(static_cast<float>(frame_width), frame_height - menubar_height - bottombar_height), frame_p, flags_changelog);
 
 
 
@@ -108,6 +109,9 @@ attack_window.SetSize(ImVec2((5.0f * frame_width) / 6.0f, frame_height - 400.0f 
 
 networkWindow.SetPos(ImVec2(frame_width / 6.0f, static_cast<float>(menubar_height)));
 networkWindow.SetSize(ImVec2((5.0f * frame_width) / 6.0f, frame_height - menubar_height - bottombar_height));
+
+changelogWindow.SetPos(ImVec2(0.0f, static_cast<float>(menubar_height)));
+changelogWindow.SetSize(ImVec2(static_cast<float>(frame_width), frame_height - menubar_height - bottombar_height));
 
 bottomBar.SetSize(ImVec2(static_cast<float>(frame_width), bottombar_height));
 //^ ///////////////////////////////////////////////////////// Login Window ///////////////////////////////////////////////////////////
@@ -175,6 +179,10 @@ helpWindow.Render();
 if (bool_network)
 {
 networkWindow.Render();
+}
+if (bool_changelog)
+{
+changelogWindow.Render();
 }
 if (bool_BottomBar)
 {

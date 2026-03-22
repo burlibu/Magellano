@@ -279,5 +279,11 @@ public:
     void Render() override;
 };
 
+class ChangelogWindow : public Window {
+public:
+    ChangelogWindow(const std::string& title, ImVec2 pos, ImVec2 size, GLFWwindow* win, ImGuiWindowFlags f);
+    void Render() override;
+};
+
 
 ;} // fine namespace Gui

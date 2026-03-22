@@ -30,9 +30,11 @@ namespace Gui {
         ImGui::PushStyleColor(ImGuiCol_WindowBg, blu_oscuro);
         ImGui::Begin(title.c_str(), &bool_BottomBar , flags_BottomBar);
         ImGui::PushStyleColor(ImGuiCol_Text, bianco);
-        ImGui::SetCursorPos(ImVec2(size.x - 120, size.y - 25));
-        std::string version_text = "version: " + version;
-        ImGui::TextUnformatted(version_text.c_str());
+        std::string status_text = "version: " + version + " | resolution: "
+          + std::to_string(frame_current_width) + "x" + std::to_string(frame_current_height);
+        const ImVec2 status_text_size = ImGui::CalcTextSize(status_text.c_str());
+        ImGui::SetCursorPos(ImVec2(size.x - status_text_size.x - 12.0f, size.y - 25.0f));
+        ImGui::TextUnformatted(status_text.c_str());
         ImGui::PopStyleColor();
         ImGui::End();
         ImGui::PopStyleColor();

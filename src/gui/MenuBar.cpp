@@ -75,6 +75,24 @@ namespace Gui {
             if (network_style) {
                 ImGui::PopStyleColor(4);
             }
+            ImGui::SameLine();
+
+            bool changelog_style = false;
+            if (bool_changelog) {
+                ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1.0f, 1.0f, 1.0f, 1.0f));
+                ImGui::PushStyleColor(ImGuiCol_Header, ImVec4(0.75f, 0.55f, 0.10f, 1.0f));
+                ImGui::PushStyleColor(ImGuiCol_HeaderHovered, ImVec4(0.85f, 0.65f, 0.15f, 1.0f));
+                ImGui::PushStyleColor(ImGuiCol_HeaderActive, ImVec4(0.65f, 0.45f, 0.05f, 1.0f));
+                changelog_style = true;
+            }
+
+            if (ImGui::MenuItem("Changelog")) {
+                bool_changelog = !bool_changelog;
+            }
+
+            if (changelog_style) {
+                ImGui::PopStyleColor(4);
+            }
             ImGui::EndMainMenuBar();
         }
     };

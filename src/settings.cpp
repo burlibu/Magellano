@@ -33,6 +33,7 @@ bool bool_settings                      = false;
 bool bool_BottomBar                     = true;
 bool bool_HelpWindow                    = false;
 bool bool_network                       = false;
+bool bool_changelog                     = false;
 
 ImGuiWindowFlags flags_minimize_and_exit_window =
     ImGuiWindowFlags_NoTitleBar 
@@ -134,6 +135,13 @@ ImGuiWindowFlags flags_network =
         | ImGuiWindowFlags_NoCollapse
         | ImGuiWindowFlags_NoSavedSettings
         ;
+
+ImGuiWindowFlags flags_changelog =
+            ImGuiWindowFlags_NoResize
+        | ImGuiWindowFlags_NoMove
+        | ImGuiWindowFlags_NoCollapse
+        | ImGuiWindowFlags_NoSavedSettings
+        ;
     
 // Settings window arrays for dropdown menus
 const char* languages[] = { "English", "Italian", "Spanish", "French", "German" };
@@ -164,6 +172,7 @@ void setAuthenticatedWindows(bool enabled) {
     bool_demo_window = enabled;
     bool_attack_window = enabled;
     bool_network = enabled;
+    bool_changelog = enabled;
 }
 
 int element_id = 0;
