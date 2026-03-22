@@ -6,7 +6,7 @@ Questo documento descrive come compilare Magellano su Linux e Windows.
 
 - **CMake**: >= 3.16
 - **C++ Compiler**: C++17 support (GCC 7+, Clang 5+, MSVC 2017+)
-- **OpenGL**: >=  3.0
+- **OpenGL**: >= 3.0
 - **Dependencies**:
   - GLFW3
   - OpenGL
@@ -137,16 +137,19 @@ make -j$(sysctl -n hw.ncpu)
 ### Errore: "curl not found"
 
 **Linux:**
+
 ```bash
 sudo apt-get install libcurl4-openssl-dev
 ```
 
 **Windows (vcpkg):**
+
 ```bash
 C:\vcpkg\vcpkg install curl:x64-windows
 ```
 
 **macOS:**
+
 ```bash
 brew install curl
 ```
@@ -190,6 +193,7 @@ Se il tuo Windows è 32-bit (raro), usa `x86-windows` al posto di `x64-windows` 
 ## CI/CD (GitHub Actions)
 
 Il repository include `.github/workflows/build.yml` che compila automaticamente su:
+
 - Ubuntu 20.04 (Linux)
 - Windows Server 2022
 - macOS Latest
@@ -205,6 +209,7 @@ Output binaries salvati come artifacts per download.
 Se hai un compilatore ameno, assicurati di abilitare C++17:
 
 **GCC/Clang:**
+
 ```bash
 cmake .. -DCMAKE_CXX_STANDARD=17
 ```
@@ -234,14 +239,14 @@ make -j$(nproc)
 
 ## Problemi comuni
 
-| Problema | Soluzione |
-|----------|-----------|
-| `GLFW not found` | Installa GLFW via package manager o vcpkg |
-| `CURL not found` | Installa libcurl via package manager o vcpkg |
-| `Compiler too old` | Aggiorna a GCC 7+, Clang 5+, o MSVC 2017+ |
-| `CMake version too old` | Aggiorna CMake a >= 3.16 |
+| Problema                | Soluzione                                    |
+| ----------------------- | -------------------------------------------- |
+| `GLFW not found`        | Installa GLFW via package manager o vcpkg    |
+| `CURL not found`        | Installa libcurl via package manager o vcpkg |
+| `Compiler too old`      | Aggiorna a GCC 7+, Clang 5+, o MSVC 2017+    |
+| `CMake version too old` | Aggiorna CMake a >= 3.16                     |
 
---- 
+---
 
 ## Link Utili
 
