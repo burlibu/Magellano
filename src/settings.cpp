@@ -37,6 +37,7 @@ bool bool_HelpWindow                    = false;
 bool bool_network                       = false;
 bool bool_changelog                     = false;
 
+// Toggle entries 
 const std::array<TopPanelToggleEntry, 4> top_panel_toggle_entries = {{
     {"Settings", &bool_settings, ImVec4(0.0f, 0.8f, 0.0f, 1.0f), ImVec4(0.0f, 0.9f, 0.0f, 1.0f), ImVec4(0.0f, 0.7f, 0.0f, 1.0f)},
     {"Help", &bool_HelpWindow, ImVec4(0.35f, 0.35f, 0.35f, 1.0f), ImVec4(0.45f, 0.45f, 0.45f, 1.0f), ImVec4(0.25f, 0.25f, 0.25f, 1.0f)},

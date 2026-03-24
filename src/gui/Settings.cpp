@@ -71,13 +71,11 @@ namespace Gui {
         default: width = 1920; height = 1080; break;
     }
     
-    if (fullscreen) {
-        // Modalità fullscreen
+    if (fullscreen) {  // Modalità fullscreen
         GLFWmonitor* monitor = glfwGetPrimaryMonitor();
         const GLFWvidmode* mode = glfwGetVideoMode(monitor);
         glfwSetWindowMonitor(window_ptr, monitor, 0, 0, mode->width, mode->height, mode->refreshRate);
-    } else {
-        // Modalità finestra - sottrai spazio per bordi e barra applicazioni
+    } else { // Modalità finestra - sottrai spazio per bordi e barra applicazioni
         int window_width = width;
         int window_height = height - 60; // Sottrai spazio per barra applicazioni
         

@@ -156,6 +156,12 @@ namespace Math {
         if (n == 1 || n == 0) return 1;
         return n * fact(n-1);
     }
+
+    unsigned int fib(unsigned int n) {
+        if (n == 0) return 0;
+        if (n == 1) return 1;
+        return fib(n-1) + fib(n-2);
+    }
 }
 std::string ImVec2_to_string(const ImVec2& vector ) {
     std::ostringstream out;
@@ -198,8 +204,6 @@ bool checkWindowSizeChange(const ImVec2& currentSize, float checkIntervalSeconds
 // }
 
 Error Rectangle(const ImVec2& pos, const ImVec2& size, color col) {
-    
-    
     bool bool_rect = true;
     ImGui::SetNextWindowPos(pos);
     ImGui::SetNextWindowSize(size);
@@ -318,7 +322,6 @@ Error checkIp(const std::string& ip) {
   if (!std::regex_match(ip, ip_regex)) {
       return Error::FAIL;
   }
-
   // Controlla se l'IP è nella gamma valida
   std::istringstream iss(ip);
   std::string token;

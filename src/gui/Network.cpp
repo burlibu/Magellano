@@ -467,7 +467,7 @@ inline void render_protocol_analysis_tab(const std::vector<NetConnection>& conne
     }
 }
 
-} // namespace (anonmous helper functions)
+} // namespace (anonymous helper functions)
 
 NetworkWindow::NetworkWindow(const std::string& title, ImVec2 p, ImVec2 s, GLFWwindow* win, ImGuiWindowFlags f)
     : Window(title, p, s, win, f) {}

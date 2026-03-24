@@ -36,7 +36,7 @@ namespace Gui {
         ImGui::SetCursorPosX(windowWidth - ImGui::CalcTextSize("- X").x - 30);
         // Bottone Minimize
         ImGui::PushStyleColor(ImGuiCol_ButtonHovered, arancione); // hover arancione
-        ImGui::PushStyleColor(ImGuiCol_Text, bianco); // testo bianco
+        ImGui::PushStyleColor(ImGuiCol_Text, bianco); // -testo bianco
         if (ImGui::Button("-")) {
             glfwHideWindow(window_ptr); 
         }
